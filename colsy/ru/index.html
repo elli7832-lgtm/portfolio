@@ -2,6 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<script>(function(){var K="site-lang",l=null,q=/[?&]lang=(ru|en)/.exec(location.search);try{l=q?q[1]:localStorage.getItem(K);}catch(e){}if(l!=="ru"&&l!=="en"){var n=(navigator.languages&&navigator.languages[0])||navigator.language||"";l=/^en(-|$)/i.test(n)?"en":"ru";}window.__siteLang=l;try{localStorage.setItem(K,l);["home-lang","case-lang","hk-lang","x5-lang","about-lang"].forEach(function(k){localStorage.setItem(k,l);});}catch(e){}if(window.__pageLang&&window.__pageLang!==l&&window.__altPage){location.replace(window.__altPage);return;}document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".lang button[data-lang]");if(b){try{localStorage.setItem(K,b.dataset.lang);}catch(e2){}}},true);})();</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Договор страхования</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1916,7 +1918,7 @@ html, body { overflow-x: clip; }
   }
   var q = /[?&]lang=(ru|en)/.exec(location.search), saved = null;
   try { saved = localStorage.getItem('case-lang'); } catch (e) {}
-  var lang = (q && q[1]) || saved || "ru";
+  var lang = (q && q[1]) || saved || window.__siteLang || "ru";
   if (lang !== 'ru') apply(lang); else document.documentElement.lang = 'ru';
   document.addEventListener('click', function (e) {
     var b = e.target.closest('.lang button');
