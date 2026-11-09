@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>X5 Dialog · продающая страница</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Golos+Text:wght@400;500&display=swap">
+<style>
+/* X5 Dialog case: the Hamkorbank template (same grid, header, bands and prototypes) with X5-specific
+   interactive blocks: the long page autoscroll, the tariff table with a desktop / mobile switch and flip cards */
+:root {
+  --accent: #0D99FF;
+  --bg: #FFFFFF;
+  --ink: #1D1D1F;
+  --muted: #6E6E73;
+  --line: #E6E6E2;
+  --chip: #F5F5F7;
+  --f-body: "Onest", system-ui, sans-serif;
+  --max: 1200px;
+  --gap: 48px;
+  --radius: 28px;
+  --x5: #5FAF2D;
+  --x5-grey: #F3F5F2;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 18px/1.65 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 160px;
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 900px) { body { padding-left: max(48px, env(safe-area-inset-left, 0px)); padding-right: max(48px, env(safe-area-inset-right, 0px)); } }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+img { display: block; max-width: 100%; height: auto; }
+p, h1, h2, h3, ul, ol, figure, dl, dd, blockquote { margin: 0; }
+
+/* ---------- Header ---------- */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+@media (min-width: 900px) { .bar { margin-inline: calc(-1 * max(48px, env(safe-area-inset-left, 0px))); padding-inline: max(48px, env(safe-area-inset-left, 0px)); } }
+.bar-in { max-width: var(--max); margin-inline: auto; min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 15px; }
+.bar a { text-decoration: none; color: var(--muted); }
+.bar a:hover { color: var(--ink); }
+.bar .brand { display: flex; gap: 20px; align-items: center; color: var(--muted); }
+.lang { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--chip); }
+.lang button { font: 500 13px/1 var(--f-body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 10px; cursor: pointer; transition: background-color .2s, color .2s; }
+.lang button[aria-pressed="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
+.lang button:hover { color: var(--ink); }
+
+/* ---------- Grid and type ---------- */
+.page { max-width: var(--max); margin-inline: auto; display: grid; gap: 140px; padding-top: 72px; }
+.page > * { min-width: 0; }
+.stack { display: grid; gap: 20px; align-content: start; }
+.block { display: grid; gap: 56px; }
+.label { font-size: 15px; color: var(--muted); }
+h2 { font-weight: 400; font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.18; letter-spacing: -0.02em; text-wrap: balance; max-width: 22em; }
+.statement { font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.2; }
+/* title on the left, description on the right */
+h2.wide { max-width: none; }
+.full { grid-column: 1 / -1; }
+.text { display: grid; gap: 16px; }
+.desc p { color: var(--muted); text-wrap: pretty; }
+.desc strong { color: var(--ink); font-weight: inherit; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px var(--gap); }
+.two p { color: var(--muted); text-wrap: pretty; }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px var(--gap); padding-top: 32px; border-top: 1px solid var(--line); }
+.kv h3 { font-weight: 500; font-size: 20px; line-height: 1.4; display: flex; gap: 16px; align-items: baseline; }
+.kv h3 .n { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.kv p { color: var(--muted); text-wrap: pretty; }
+.kv p b { font-weight: 400; color: var(--ink); }
+.block + .band, .band + .block { margin-top: -60px; }
+@media (max-width: 860px) {
+  .page { gap: 96px; padding-top: 40px; }
+  .kv { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .kv p + h3 { margin-top: 24px; }
+  .block + .band, .band + .block { margin-top: -40px; }
+}
+
+/* ---------- Hero ---------- */
+.hk-hero { display: grid; gap: 28px; }
+.hk-eyebrow { font-size: 17px; color: var(--muted); }
+.hk-title { font-weight: 500; font-size: clamp(3.4rem, 10vw, 8.6rem); line-height: .95; letter-spacing: -0.045em; }
+.hk-lead { font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.4; max-width: 34em; text-wrap: pretty; }
+/* role and results: two blocks without rules, as on the ColSy page */
+.row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px var(--gap); align-items: start; }
+.hk-meta { margin-top: 20px; }
+.facts { display: grid; gap: 10px; align-content: start; }
+.facts ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+@media (max-width: 860px) { .row { grid-template-columns: minmax(0, 1fr); } }
+/* full-bleed dotted canvas, the same as the ColSy cover */
+.canvas {
+  margin-inline: calc(50% - 50vw); padding: clamp(48px, 7vw, 104px) max(16px, env(safe-area-inset-left, 0px));
+  background-color: var(--chip);
+  background-image: radial-gradient(circle, #C4C4C9 1px, transparent 1.3px);
+  background-size: 24px 24px; background-position: center;
+}
+.hk-stage { margin-top: -80px; }
+.hk-shot { position: relative; width: min(100%, 1120px); margin-inline: auto; }
+.hk-shot > img { width: 100%; border-radius: clamp(14px, 2.2vw, 24px); box-shadow: 0 0 0 1px #CBCBD2, 0 30px 60px -40px rgba(29, 29, 31, .35); }
+.hk-end { display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+.lk-copy { max-width: 40rem; color: var(--muted); text-wrap: pretty; }
+.lk-copy b { font-weight: 400; color: var(--ink); }
+
+/* ---------- Bands with interface ---------- */
+.band { margin-inline: calc(50% - 50vw); padding: clamp(48px, 7vw, 96px) max(16px, env(safe-area-inset-left, 0px)); background: var(--chip); }
+.band-in { width: min(100%, 1120px); margin-inline: auto; display: grid; gap: 24px; }
+.hk-col { gap: clamp(20px, 3vw, 32px); }
+.shot { display: grid; gap: 12px; }
+.shot img { width: 100%; border-radius: clamp(10px, 1.6vw, 18px); box-shadow: 0 0 0 1px #D2D2D8; background: #fff; }
+.shot.bare img { box-shadow: none; }
+.shot figcaption { font-size: 14px; color: var(--muted); }
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(20px, 3vw, 32px); align-items: start; }
+/* UI kit block: a ready composition with its own margins, edge to edge on the band */
+.kit-full { padding: 0; }
+.kit-full img { display: block; width: 100%; max-width: 1980px; margin-inline: auto; }
+/* Two kit sections cropped by the band edges */
+.kit2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(16px, 3vw, 32px); align-items: start; height: clamp(420px, 56vw, 680px); overflow: hidden; margin-bottom: calc(-1 * clamp(48px, 7vw, 96px)); }
+.kit2 figure:last-child { margin-top: clamp(40px, 6vw, 88px); }
+.kit2 img { width: 100%; border-radius: 18px 18px 0 0; box-shadow: 0 0 0 1px #E1E1E6, 0 24px 60px -30px rgba(29, 29, 31, .3); }
+/* Auto-playing navigation prototype */
+.fp { container-type: inline-size; }
+.fp-scr { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 round var(--r)); opacity: 0; transition: opacity .35s ease; --sy: 0; }
+.fp-scr.on { opacity: 1; }
+.fp-scr img { display: block; width: 100%; height: auto; transform: translateY(calc(var(--sy) * -100cqw)); transition: transform 2.4s cubic-bezier(.45, 0, .25, 1); }
+.fp-note { margin-top: 14px; font-size: 14px; color: var(--muted); text-align: center; }
+.fp-note:empty { display: none; }
+.np-fig { display: grid; gap: 16px; width: min(100%, 1120px); margin-inline: auto; }
+.np-fig figcaption { font-size: 14px; color: var(--muted); }
+.np { --r: clamp(14px, 2.2vw, 24px); position: relative; isolation: isolate; aspect-ratio: 1440 / 1024; border-radius: var(--r); overflow: hidden; background: #fff; box-shadow: 0 30px 60px -40px rgba(29, 29, 31, .35); }
+/* The outline sits on its own layer above the screens, so the animated screens can't cover it at the rounded corners. */
+.np::after { content: ""; position: absolute; inset: 0; z-index: 4; border-radius: inherit; box-shadow: inset 0 0 0 1px #CBCBD2; pointer-events: none; }
+.np-shot { position: absolute; inset: 0; width: 100%; height: 100%; clip-path: inset(0 round var(--r)); opacity: 0; transition: opacity .35s ease; }
+.np-shot.on { opacity: 1; }
+.np-tap { position: absolute; z-index: 3; width: clamp(30px, 3.4vw, 46px); aspect-ratio: 1; border-radius: 50%; background: rgba(29, 29, 31, .16); box-shadow: 0 0 0 2px rgba(255, 255, 255, .8); transform: translate(-50%, -50%); opacity: 0; pointer-events: none; }
+.np-tap.on { animation: npTapMark .7s ease-out; }
+@keyframes npTapMark { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.5); } 25% { opacity: 1; transform: translate(-50%, -50%) scale(.85); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); } }
+.np-cursor { position: absolute; left: 52%; top: 62%; z-index: 2; width: clamp(11px, 1.4vw, 18px); pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .25)); transition: left .9s cubic-bezier(.45, 0, .2, 1), top .9s cubic-bezier(.45, 0, .2, 1); }
+.np-cursor svg { display: block; width: 100%; height: auto; }
+.np-cursor::after { content: ""; position: absolute; left: -9px; top: -9px; width: 20px; height: 20px; border-radius: 50%; background: rgba(13, 153, 255, .35); opacity: 0; }
+.np-cursor.tap::after { animation: npTap .45s ease-out; }
+@keyframes npTap { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .np-cursor, .np-shot, .fp-scr, .fp-scr img { transition: none; } }
+.duo2 .shot img { box-shadow: none; }
+.duo2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); }
+@media (max-width: 700px) { .duo2 { grid-template-columns: minmax(0, 1fr) !important; } }
+.mock2 { display: grid; grid-template-columns: repeat(2, minmax(0, 300px)); justify-content: center; gap: clamp(24px, 8vw, 120px); }
+.mock2 figure { display: grid; gap: 20px; justify-items: center; }
+.mock2 img { width: 100%; filter: drop-shadow(0 30px 40px rgba(29, 29, 31, .18)); }
+.mock2 figcaption { font-size: 15px; color: var(--muted); }
+.kit { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.kit .w2 { grid-column: 1 / -1; }
+@media (max-width: 860px) {
+  .duo, .kit { grid-template-columns: minmax(0, 1fr); }
+  .phones { padding-inline: 0; }
+}
+
+
+/* ---------- X5 interactive blocks ---------- */
+/* Long page autoscroll: the page is cut into tiles (phones refuse one huge image); the stack moves as one */
+.fp-long .pg { transform: translateY(calc(var(--sy) * -100cqw)); transition: transform 2.4s cubic-bezier(.45, 0, .25, 1); will-change: transform; }
+.fp-long .pg img { width: 100%; height: auto; transform: none; transition: none; }
+.fp-long .pg.jump { transition: none; }
+#chProto { aspect-ratio: 1440 / 1248; }
+
+/* Three breakpoints side by side at the same height */
+.bp { display: grid; grid-template-columns: 1.406fr .698fr .462fr; gap: clamp(12px, 2vw, 24px); align-items: end; }
+.bp figure { display: grid; gap: 10px; }
+.bp img { width: 100%; border-radius: clamp(6px, 1vw, 12px); box-shadow: 0 0 0 1px #D2D2D8; background: #fff; }
+.bp figcaption { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 700px) { .bp { grid-template-columns: .698fr .462fr; } .bp figure:first-child { grid-column: 1 / -1; } }
+
+.mock2 figure { align-content: start; }
+.mock2 figcaption { text-align: center; text-wrap: balance; }
+
+/* View switch above the tariff table: the page's own control, not part of the X5 interface */
+.vt { justify-self: center; display: inline-flex; gap: 2px; padding: 4px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px #E1E1E6; }
+.vt button { font: 500 15px/1 var(--f-body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; transition: background-color .2s, color .2s; }
+.vt button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.vt button:hover { color: var(--ink); }
+.vt button[aria-pressed="true"]:hover { color: #fff; }
+
+/* ---------- Rebuilt X5 Dialog interface: tariffs and client cards ---------- */
+.x5ui { --x5-ink: #1D1F23; --x5-muted: #939890; --x5-line: #D4D9D1; font-family: "Golos Text", system-ui, sans-serif; color: var(--x5-ink); font-size: 14px; line-height: 1.3; }
+.x5ui button { font: inherit; color: inherit; }
+.x5ui ul { margin: 0; padding: 0 0 0 1.1em; display: grid; gap: 8px; }
+.x5ui .no { color: var(--x5-muted); }
+.x5ui .ok { width: 20px; height: 20px; color: var(--x5); }
+.x5ui .sub { display: block; margin-top: 6px; font-size: 11.5px; color: inherit; opacity: .8; }
+.x5-btn { display: block; width: 100%; padding: 13px 16px; border-radius: 999px; border: 1px solid var(--x5); background: transparent; color: var(--x5-ink); text-align: center; font-size: 15px; }
+.x5-btn.w { background: #fff; border-color: #fff; }
+
+/* Desktop: the comparison table */
+#tariffs[data-view="m"] .x5t-d, #tariffs[data-view="d"] .x5t-m { display: none; }
+.x5t-d { overflow-x: auto; background: #fff; border-radius: 24px; padding: clamp(16px, 2.6vw, 32px); box-shadow: 0 0 0 1px #E1E1E6; overscroll-behavior-x: contain; }
+.x5t { width: 100%; min-width: 880px; border-collapse: collapse; table-layout: fixed; }
+.x5t th, .x5t td { text-align: left; vertical-align: top; padding: 16px 18px; border-bottom: 1px solid var(--x5-line); }
+.x5t th[scope="row"] { width: 21%; padding-left: 0; font-weight: 500; font-size: 14.5px; }
+.x5t thead th { font-weight: 500; font-size: 15px; padding-block: 22px; }
+.x5t .c1 { background: var(--x5); color: #fff; border-bottom-color: rgba(255, 255, 255, .28); }
+.x5t .c1 .no, .x5t .c1 .ok { color: #fff; }
+.x5t .c3 { background: var(--x5-grey); }
+.x5t tbody tr:last-child > * { border-bottom: 0; }
+.x5t .btns td { padding-block: 18px 22px; }
+
+/* Mobile: tariff cards that expand */
+.x5t-m { width: min(100%, 375px); margin-inline: auto; display: grid; gap: 16px; }
+.x5m { background: var(--x5-grey); border-radius: 4px; box-shadow: inset 0 0 0 1px #E1E1E6; }
+.x5m.c1 { background: var(--x5); color: #fff; box-shadow: none; }
+.x5m-h { padding: 22px 20px 8px; display: grid; gap: 10px; }
+.x5m-h h4 { margin: 0; font-weight: 500; font-size: 20px; line-height: 1.2; }
+.x5m-tg { display: flex; width: 100%; justify-content: space-between; align-items: center; padding: 22px 20px; border: 0; background: none; cursor: pointer; text-align: left; }
+.x5m-tg svg { transition: transform .3s; }
+.x5m-tg[aria-expanded="true"] svg { transform: rotate(180deg); }
+.x5m-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.3, .7, .2, 1); }
+.x5m-body > div { overflow: hidden; }
+.x5m.open .x5m-body { grid-template-rows: 1fr; }
+.x5m-r { padding: 16px 20px; border-top: 1px solid var(--x5-line); display: grid; gap: 8px; }
+.x5m.c1 .x5m-r, .x5m.c1 .x5m-f { border-color: rgba(255, 255, 255, .28); }
+.x5m-r .lb { font-size: 12px; color: var(--x5-muted); }
+.x5m.c1 .lb { color: rgba(255, 255, 255, .8); }
+.x5m-f { padding: 22px 20px 24px; border-top: 1px solid var(--x5-line); display: grid; gap: 6px; }
+.x5m-f .pr { font-weight: 500; font-size: 24px; line-height: 1.2; }
+.x5m-f .x5-btn { margin-top: 16px; }
+
+/* Client cards that flip on click */
+.x5c-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.x5c { position: relative; padding: 0; border: 0; background: none; cursor: pointer; perspective: 1400px; aspect-ratio: 429 / 540; text-align: left; border-radius: 4px; }
+.x5c-in { position: absolute; inset: 0; display: block; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3, .7, .2, 1); }
+.x5c[aria-pressed="true"] .x5c-in { transform: rotateY(180deg); }
+.x5c-f, .x5c-b { position: absolute; inset: 0; display: flex; flex-direction: column; padding: clamp(18px, 2vw, 24px); background: #fff; border-radius: 4px; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 0 0 1px #E1E1E6; }
+.x5c-b { transform: rotateY(180deg); font-size: clamp(13px, 1.25vw, 15px); line-height: 1.35; }
+.x5c-tag { align-self: flex-start; padding: 7px 12px; border-radius: 999px; background: var(--x5-grey); font-size: 13px; }
+.x5c-t { margin-top: auto; font-weight: 500; font-size: clamp(19px, 2vw, 24px); line-height: 1.18; letter-spacing: -0.01em; }
+.x5c-p { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.x5c-p b { display: block; font-weight: 500; font-size: 14px; }
+.x5c-p small { display: block; margin-top: 4px; font-size: 12.5px; color: var(--x5-muted); }
+.x5c-p img { width: 56px; height: 56px; border-radius: 50%; flex: none; }
+.x5c:hover .x5c-f, .x5c:hover .x5c-b { box-shadow: 0 0 0 1px var(--x5); }
+@media (max-width: 860px) {
+  .x5c-row { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(82%, 340px); overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); scrollbar-width: none; }
+  .x5c-row::-webkit-scrollbar { display: none; }
+  .x5c { scroll-snap-align: center; }
+  .x5c-b { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .x5c-in { transition: none; } }
+
+/* ---------- Result and next ---------- */
+.results { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px var(--gap); }
+.big { font-variant-numeric: tabular-nums; font-size: clamp(3.6rem, 7vw, 6.2rem); line-height: .95; letter-spacing: -0.05em; }
+.big-sub { font-size: 18px; color: var(--muted); }
+@media (max-width: 860px) { .results { grid-template-columns: minmax(0, 1fr); } }
+.next { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; text-decoration: none; border-top: 1px solid var(--line); padding-top: 24px; }
+.next .arr { font-size: 32px; transition: color .2s; }
+.next h2 { transition: color .2s; }
+.next:hover h2, .next:hover .arr { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
+<header class="bar">
+  <div class="bar-in">
+    <a data-t="k0" class="back" href="../" target="_top">← Все проекты</a>
+    <div class="brand"><span>X5 Dialog</span><span class="lang" role="group" aria-label="Язык / Language"><button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></span></div>
+  </div>
+</header>
+
+<main class="page" id="top">
+  <!-- HERO: title, facts, the whole landing scrolling in a browser frame -->
+  <section class="hk-hero" aria-labelledby="hk-h">
+    <p class="hk-eyebrow" data-t="k1">Продающая страница сервиса аналитики</p>
+    <h1 id="hk-h" class="hk-title">X5 Dialog</h1>
+    <p class="hk-lead" data-t="k2">Страница аналитики продаж от X5 Group, которая объясняет, что дает продукт, сравнивает тарифы и ведет к заявке на бесплатный доступ</p>
+    <div class="row hk-meta">
+      <div class="facts">
+        <p class="label" data-t="k3">Роль</p>
+        <ul>
+          <li data-t="k4">Концепция вместе с лидом, доработки, десктоп, планшет и мобильная версия, спецификация для разработки</li>
+        </ul>
+      </div>
+      <div class="facts">
+        <p class="label" data-t="k5">Результаты</p>
+        <ul>
+          <li data-t="k6">Страница запущена и больше года работала на этом дизайне</li>
+          <li data-t="k7">На странице появилось сравнение четырех тарифов по 11 параметрам</li>
+          <li data-t="k8">Лендинг выглядит частью обновленного сайта X5 Dialog</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="canvas hk-stage" aria-label="Страница X5 Dialog Insights целиком" data-ta="k-stage">
+    <div class="hk-shot">
+      <div class="np fp fp-long" id="pageProto" role="img" aria-label="Страница прокручивается сверху вниз: первый экран с графиком, цифры, торговые сети, результаты клиентов, преимущества, тарифы, шаги подключения, материалы, вопросы, сервисы, медиа и заявка" data-ta="k-hero">
+        <div class="fp-scr on" data-s="page"><div class="pg">
+          <img src="img/pg-00.jpg" width="2160" height="2400" alt="">
+          <img src="img/pg-01.jpg" width="2160" height="2400" alt="">
+          <img src="img/pg-02.jpg" width="2160" height="2400" alt="" loading="lazy">
+          <img src="img/pg-03.jpg" width="2160" height="2400" alt="" loading="lazy">
+          <img src="img/pg-04.jpg" width="2160" height="2400" alt="" loading="lazy">
+          <img src="img/pg-05.jpg" width="2160" height="2400" alt="" loading="lazy">
+          <img src="img/pg-06.jpg" width="2160" height="2400" alt="" loading="lazy">
+          <img src="img/pg-07.jpg" width="2160" height="2243" alt="" loading="lazy">
+        </div></div>
+      </div>
+      <p class="fp-note" data-t="kfn"></p>
+    </div>
+  </section>
+
+  <!-- SITUATION -->
+  <section class="block" aria-labelledby="s-h">
+    <div class="stack">
+      <p class="label" data-t="k10">Ситуация</p>
+      <h2 id="s-h" class="wide" data-t="k11">Страница у продукта была, но она не продавала и выбивалась из обновленного сайта</h2>
+    </div>
+    <div class="two">
+      <p data-t="ks1">X5 Dialog Insights — аналитика продаж на данных X5 Group: чеках и картах лояльности Пятерочки, Перекрестка и Чижика, офлайн и онлайн. X5 продает ее компаниям, которым важно понимать свои продажи и покупателей. Сайт X5 Dialog к тому времени обновили, а страница Insights осталась в старом дизайне, и при переходе между разделами разница бросалась в глаза.</p>
+      <p data-t="ks2">К тому же страница почти ничего не объясняла: в чем суть продукта, что входит в тарифы и сколько это стоит. Клиенту было непонятно, что он получит и с чего начать.</p>
+    </div>
+  </section>
+
+  <!-- TASK -->
+  <section class="row" aria-labelledby="t-h">
+    <div class="stack full">
+      <p class="label" data-t="k18">Задача</p>
+      <h2 id="t-h" data-t="k19">Сделать продающий лендинг продукта в стиле обновленного сайта</h2>
+    </div>
+    <div class="text desc">
+      <p data-t="kt1"><strong>Продающая страница:</strong> объяснить ценность продукта, показать тарифы и привести клиента к заявке.</p>
+      <p data-t="kt2"><strong>Единый стиль:</strong> взять основные элементы обновленной главной X5 Dialog, чтобы переход между разделами был незаметным.</p>
+    </div>
+    <div class="text desc">
+      <p data-t="kt3"><strong>Воронка:</strong> главная цель — заявка на бесплатный доступ. Так X5 собирает контакты и потом знакомит клиента с платными планами.</p>
+      <p data-t="kt4"><strong>Моя роль:</strong> концепция вместе с лидом, все доработки, десктоп в двух размерах, планшет и мобильная версия, спецификация для разработки.</p>
+    </div>
+  </section>
+
+  <!-- BREAKPOINTS -->
+  <section class="band" aria-label="Десктоп, планшет и мобильная версия" data-ta="k-bp-sec">
+    <div class="band-in">
+      <div class="bp">
+        <figure><img src="img/bp-1440.jpg" width="2160" height="1536" alt="Первый экран на десктопе" data-ta="k-bp1" loading="lazy"><figcaption data-t="kbp1">Десктоп · 1440 px</figcaption></figure>
+        <figure><img src="img/bp-tablet.jpg" width="1668" height="2388" alt="Первый экран на планшете" data-ta="k-bp2" loading="lazy"><figcaption data-t="kbp2">Планшет · 834 px</figcaption></figure>
+        <figure><img src="img/m-top.jpg" width="750" height="1624" alt="Первый экран мобильной версии" data-ta="k-bp3" loading="lazy"><figcaption data-t="kbp3">Мобильная · 375 px</figcaption></figure>
+      </div>
+      <p class="ba-cap" data-t="kbp">Лендинг в трех версиях. Каждый блок проработан отдельно для десктопа, планшета и телефона, со своими состояниями.</p>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="block" aria-labelledby="r-h">
+    <div class="stack">
+      <p class="label" data-t="k31">Процесс</p>
+      <h2 id="r-h" data-t="k32">Начали с ТЗ продукта, а дольше всего работали над тарифами</h2>
+    </div>
+    <div class="kv">
+      <h3 data-t="k33">ТЗ от X5</h3><p data-t="k34">Продуктовая команда X5 описала, что должно быть на странице. Мы с лидом собрали из этого структуру: от ценности и данных к тарифам, шагам подключения и заявке.</p>
+      <h3 data-t="k35">Тексты</h3><p data-t="k36">Продающие тексты писал копирайтер, которого мы привлекли отдельно.</p>
+      <h3 data-t="k37">2 итерации концепции</h3><p data-t="k38">Сильнее всего между ними поменялась таблица тарифов: ее дорабатывали дольше остальных блоков.</p>
+      <h3 data-t="k39">Разработка</h3><p data-t="k40">Страницу верстала команда X5. Я передала макеты для десктопа, планшета и телефона и описала поведение интерактивных элементов.</p>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="block" aria-labelledby="d-h">
+    <div class="stack">
+      <p class="label" data-t="k44">Решения</p>
+      <h2 id="d-h" data-t="k45">Пять решений, которые ведут клиента от ценности продукта к заявке</h2>
+    </div>
+    <div class="kv">
+      <h3><span class="n">01</span><span data-t="k46">Задачи клиента и график на первом экране</span></h3><p data-t="k47">Под заголовком — вкладки с задачами клиента: мониторинг бренда, покупательское поведение, промоакции. Каждая вкладка открывает свой пример отчета, а при наведении на график появляется список метрик из него. Ценность продукта видна до первого скролла.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Первый экран">
+    <div class="band-in hk-col">
+      <figure class="np-fig">
+        <div class="np" id="chProto" role="img" aria-label="Прототип: вкладки меняют пример отчета, а при наведении на график появляется тултип со списком метрик" data-ta="k-ch">
+          <img class="np-shot on" data-s="t1" src="img/ch-1.jpg" width="2160" height="1872" alt="">
+          <img class="np-shot" data-s="t1tip" src="img/ch-1-tip.jpg" width="2160" height="1872" alt="" loading="lazy">
+          <img class="np-shot" data-s="t2" src="img/ch-2.jpg" width="2160" height="1872" alt="" loading="lazy">
+          <img class="np-shot" data-s="t2tip" src="img/ch-2-tip.jpg" width="2160" height="1872" alt="" loading="lazy">
+          <span class="np-tap" aria-hidden="true"></span>
+        </div>
+        <figcaption data-t="kch">Прототип: вкладки меняют пример отчета, а при наведении на график появляется тултип с метриками, которые есть в отчете</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d2-h">
+    <div class="kv">
+      <h3 id="d2-h"><span class="n">02</span><span data-t="k48">Таблица тарифов</span></h3><p data-t="k49">Четыре тарифа по 11 параметрам: от описания и цены до формата отчетов и частоты обновления данных. Бесплатный тариф стоит первым и выделен зеленым: главная цель страницы — заявка на бесплатный доступ, а платные планы рядом, чтобы было с чем сравнить.</p>
+      <h3><span class="n">03</span><span data-t="k50">Карточки тарифов на телефоне</span></h3><p data-t="k51">Таблица на четыре колонки не помещается в телефон, поэтому на мобильном каждый тариф стал отдельной карточкой: название, описание, цена и кнопка. Все параметры раскрываются по «Подробнее о тарифе». <b>Переключите вид и раскройте карточку.</b></p>
+    </div>
+  </section>
+  <section class="band" aria-label="Интерактивная таблица тарифов" data-ta="k-tar-sec">
+    <div class="band-in">
+      <div class="vt" role="group" aria-label="Вид таблицы" data-ta="k-vt"><button type="button" data-v="d" aria-pressed="true" data-t="kv1">Десктоп</button><button type="button" data-v="m" aria-pressed="false" data-t="kv2">Мобильный</button></div>
+      <div class="x5ui" id="tariffs" data-view="d">
+        <div class="x5t-d" role="region" aria-label="Таблица тарифов" tabindex="0" data-ta="k-tbl"><table class="x5t"></table></div>
+        <div class="x5t-m"></div>
+      </div>
+      <p class="fp-note" data-t="ktn"></p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d4-h">
+    <div class="kv">
+      <h3 id="d4-h"><span class="n">04</span><span data-t="k52">Карточки клиентов переворачиваются</span></h3><p data-t="k53">На лицевой стороне — результат клиента и автор отзыва, на обороте — подробная история. Переворот не сдвигает соседние блоки, как это бывает при раскрытии. На десктопе карточка переворачивается при наведении, на телефоне — по тапу. <b>Нажмите на карточку.</b></p>
+    </div>
+  </section>
+  <section class="band" aria-label="Карточки клиентов" data-ta="k-fl-sec">
+    <div class="band-in">
+      <div class="x5ui x5c-row" id="cases">
+        <button type="button" class="x5c" aria-pressed="false">
+          <span class="x5c-in">
+            <span class="x5c-f">
+              <span class="x5c-tag">Производитель бытовой химии</span>
+              <span class="x5c-t">Исследовали покупательские метрики и усилили успешные кейсы</span>
+              <span class="x5c-p"><span><b>Анна Морозова</b><small>старший категорийный менеджер</small></span><img src="img/av-1.jpg" width="192" height="192" alt="" loading="lazy"></span>
+            </span>
+            <span class="x5c-b">Анализ от Dialog.X5/Insights позволяет нам оценить размещение и инкрементальность для каждой новинки и найти подходящие условия. Так, например, мы успешно вывели новинку в категории бытовой химии, подобрали эффективный график промо и оптимально распределили ассортимент по клиентам. С помощью регулярной аналитики мы разработали стандарты выкладки и составили рекомендации для размещения на дополнительных местах продаж. Это помогло оптимизировать портфель и добиться максимальной инкрементальности.</span>
+          </span>
+        </button>
+        <button type="button" class="x5c" aria-pressed="false">
+          <span class="x5c-in">
+            <span class="x5c-f">
+              <span class="x5c-tag">Производитель напитков и снеков</span>
+              <span class="x5c-t">Разработали план успешного внедрения новинок с помощью big-data аналитики</span>
+              <span class="x5c-p"><span><b>Ольга Соколова</b><small>старший менеджер по исследованиям</small></span><img src="img/av-2.jpg" width="192" height="192" alt="" loading="lazy"></span>
+            </span>
+            <span class="x5c-b">Инструменты Dialog.X5/Insights показывают, какие факторы увеличивают продажи и делают бренд успешнее. Например, благодаря анализу метрик мы увидели, что фирменное оборудование повышает продажи некоторых позиций, и определили в деталях эффект на бренды и категории. Также мы скорректировали локацию оборудования и период установки для брендов, у которых заметили снижение покупательского интереса. В результате мы расширили дистрибуцию брендированных стендов и добились положительной динамики по всей категории товаров.</span>
+          </span>
+        </button>
+        <button type="button" class="x5c" aria-pressed="false">
+          <span class="x5c-in">
+            <span class="x5c-f">
+              <span class="x5c-tag">Производитель продуктов питания</span>
+              <span class="x5c-t">Оценили предпочтения покупателей и нашли способы развития ассортимента</span>
+              <span class="x5c-p"><span><b>Мария Лебедева</b><small>национальный менеджер по развитию категории</small></span><img src="img/av-3.jpg" width="192" height="192" alt="" loading="lazy"></span>
+            </span>
+            <span class="x5c-b">Благодаря сервису Dialog.X5/Insights мы проанализировали репертуар покупок, оценили покупательские предпочтения и составили дерево потребностей, чтобы запланировать развитие нашего портфеля и целой категории. Теперь мы знаем потенциал ключевых потребностей категории и ориентируемся на него, когда планируем развитие ассортимента, а также упрощаем поиск товаров для покупателей благодаря логичному зонированию.</span>
+          </span>
+        </button>
+      </div>
+      <p class="fp-note" data-t="kfl">Названия компаний и имена изменены, фото стоковые</p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d5-h">
+    <div class="kv">
+      <h3 id="d5-h"><span class="n">05</span><span data-t="k54">Мобильная версия со своими состояниями</span></h3><p data-t="k55">Наведения на телефоне нет, поэтому тултип графика стал оборотом карточки: метрики открываются по тапу. А кнопка «Заявка на демо» появляется в шапке, когда основная кнопка первого экрана уходит из вида.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Мобильная версия">
+    <div class="band-in hk-col">
+      <div class="mock2">
+        <figure><img src="img/phone-top.png" width="760" height="1549" alt="Первый экран мобильной версии: карточка графика перевернута и показывает доступные метрики" data-ta="k-m1" loading="lazy"><figcaption data-t="kp1">Метрики на обороте карточки графика</figcaption></figure>
+        <figure><img src="img/phone-scroll.png" width="760" height="1549" alt="Мобильная версия после скролла: в шапке появилась кнопка «Заявка на демо»" data-ta="k-m2" loading="lazy"><figcaption data-t="kp2">После скролла в шапке появляется кнопка</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEC -->
+  <section class="block" aria-labelledby="u-h">
+    <div class="stack">
+      <p class="label" data-t="k77">Спецификация</p>
+      <h2 id="u-h" data-t="k78">Описала поведение интерактивных элементов для разработки</h2>
+    </div>
+    <div class="kv">
+      <h3 data-t="k79">Тултипы графиков</h3><p data-t="k80">Нарисовала тултипы для каждой вкладки и правила их положения: где появляется, как следует за курсором и что делать у края экрана.</p>
+      <h3 data-t="k81">Состояния и ссылки</h3><p data-t="k82">Ховеры карточек и кнопок, выпадающее меню, перевороты карточек, слайдеры и ссылки каждого блока описала комментариями прямо в макетах.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Спецификация тултипов" data-ta="k-spec-sec">
+    <div class="band-in hk-col">
+      <figure class="shot"><img src="img/spec-tooltip.jpg" width="2160" height="1806" alt="Экран с тултипом в правом нижнем углу от курсора" data-ta="k-sp1" loading="lazy"><figcaption data-t="ksp1">Тултип появляется в правом нижнем углу от курсора и следует за ним. Крайнее правое положение — 30 px от края макета, а если тултип не помещается, он открывается слева от курсора</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="block" aria-labelledby="res-h">
+    <div class="stack">
+      <p class="label" data-t="k88">Результат</p>
+      <h2 id="res-h" class="statement" data-t="k89">Страница объясняет продукт, сравнивает тарифы и ведет к заявке на бесплатный доступ, а выглядит частью сайта X5 Dialog</h2>
+    </div>
+    <div class="results">
+      <div class="stack"><p class="big">4</p><p class="big-sub" data-t="k90">тарифа в сравнении по 11 параметрам</p></div>
+      <div class="stack"><p class="big">3</p><p class="big-sub" data-t="k91">версии страницы: десктоп, планшет и телефон</p></div>
+      <div class="stack"><p class="big">2</p><p class="big-sub" data-t="k92">итерации концепции</p></div>
+    </div>
+    <div class="hk-end">
+      <p class="lk-copy" data-t="k93">Страница ушла в разработку в нашей версии и больше года работала на этом дизайне, пока X5 снова не обновила сайт. Метрик после запуска у меня нет: разработка и запуск были на стороне X5.</p>
+    </div>
+  </section>
+
+  <a class="next" href="../colsy/ru/" target="_top" data-href-ru="../colsy/ru/" data-href-en="../colsy/">
+    <div class="stack"><p class="label" data-t="k95">Следующий кейс</p><h2>ColSy</h2></div>
+    <span class="arr" aria-hidden="true">→</span>
+  </a>
+</main>
+<script>
+(function () {
+  var root = document.documentElement;
+  var EN = {"k0": "← All projects", "k1": "Sales page for an analytics service", "k2": "A page for X5 Group’s sales analytics that explains what the product gives, compares the plans and leads to a request for free access", "k3": "Role", "k4": "Concept together with the lead, all further iterations, desktop, tablet and mobile versions, a spec for development", "k5": "Results", "k6": "The page went live and ran on this design for more than a year", "k7": "The page got a comparison of four plans across 11 parameters", "k8": "The landing page looks like part of the redesigned X5 Dialog website", "kfn": "The website is in Russian, so the interface is shown in Russian", "k10": "Situation", "k11": "The product had a page, but it didn’t sell and stood out from the redesigned website", "ks1": "X5 Dialog Insights is sales analytics built on X5 Group data: receipts and loyalty cards of Pyaterochka, Perekrestok and Chizhik, offline and online. X5 sells it to companies that need to understand their sales and shoppers. By then the X5 Dialog website had been redesigned, while the Insights page was still in the old design, and the difference was obvious when you moved between sections.", "ks2": "On top of that, the page explained almost nothing: what the product is, what the plans include and how much they cost. A client couldn’t tell what they would get or where to start.", "k18": "Task", "k19": "Build a sales landing page for the product in the style of the redesigned website", "kt1": "<strong>A page that sells:</strong> explain the product’s value, show the plans and bring the client to a request.", "kt2": "<strong>One style:</strong> take the main elements of the redesigned X5 Dialog home page, so moving between sections feels seamless.", "kt3": "<strong>A funnel:</strong> the main goal is a request for free access. That’s how X5 collects contacts and then introduces the client to the paid plans.", "kt4": "<strong>My role:</strong> the concept together with the lead, all further iterations, desktop in two sizes, tablet and the mobile version, a spec for development.", "kbp": "The landing page in three versions. Every block is designed separately for desktop, tablet and phone, with its own states.", "kbp1": "Desktop · 1440 px", "kbp2": "Tablet · 834 px", "kbp3": "Mobile · 375 px", "k31": "Process", "k32": "We started from the product brief and spent the most time on the plans", "k33": "Brief from X5", "k34": "The X5 product team described what the page had to include. The lead and I turned it into a structure: from value and data to plans, onboarding steps and the request.", "k35": "Copy", "k36": "The sales copy was written by a copywriter we brought in separately.", "k37": "2 concept iterations", "k38": "The plan table changed the most between them: it took longer to refine than any other block.", "k39": "Development", "k40": "The X5 team built the page. I handed over the layouts for desktop, tablet and phone and described how the interactive elements behave.", "k44": "Decisions", "k45": "Five decisions that take the client from the product’s value to a request", "k46": "Client tasks and a chart on the first screen", "k47": "Under the headline there are tabs with client tasks: brand monitoring, shopper behaviour, promotions. Each tab opens its own sample report, and hovering over the chart shows the metrics it includes. The product’s value is visible before the first scroll.", "kch": "Prototype: tabs switch the sample report, and hovering over the chart shows a tooltip with the metrics the report includes", "k48": "Plan table", "k49": "Four plans across 11 parameters, from the description and price to report formats and data refresh rate. The free plan comes first and is highlighted in green: the page’s main goal is a request for free access, and the paid plans sit next to it for comparison.", "k50": "Plan cards on a phone", "k51": "A four-column table doesn’t fit on a phone, so on mobile each plan became its own card: name, description, price and a button. All parameters open under “More about the plan”. <b>Switch the view and open a card.</b>", "kv1": "Desktop", "kv2": "Mobile", "ktn": "The interface is in Russian, as on the website", "k52": "Client cards flip", "k53": "The front shows the client’s result and who gave the review, the back tells the full story. A flip doesn’t push the neighbouring blocks around the way an expanding card would. On desktop a card flips on hover, on a phone on tap. <b>Click a card.</b>", "kfl": "Company names and people’s names are changed, the photos are stock", "k54": "A mobile version with its own states", "k55": "There is no hover on a phone, so the chart tooltip became the back of the card: the metrics open on tap. And the “Request a demo” button appears in the header once the main button of the first screen scrolls out of view.", "kp1": "Metrics on the back of the chart card", "kp2": "After scrolling, a button appears in the header", "k77": "Spec", "k78": "I described how the interactive elements behave for development", "k79": "Chart tooltips", "k80": "I drew tooltips for every tab and the rules for their position: where a tooltip appears, how it follows the cursor and what happens at the edge of the screen.", "k81": "States and links", "k82": "Hovers on cards and buttons, the drop-down menu, card flips, sliders and the links of every block are described in comments right in the layouts.", "ksp1": "The tooltip appears at the bottom right of the cursor and follows it. Its rightmost position is 30 px from the edge of the layout, and if it doesn’t fit, it opens to the left of the cursor", "k88": "Result", "k89": "The page explains the product, compares the plans and leads to a request for free access, and it looks like part of the X5 Dialog website", "k90": "plans compared across 11 parameters", "k91": "versions of the page: desktop, tablet and phone", "k92": "concept iterations", "k93": "The page went into development in our version and ran on this design for more than a year, until X5 redesigned the website again. I have no metrics after launch: development and launch were on the X5 side.", "k95": "Next case"}, EN_ATTR = {"k-stage": {"aria-label": "The whole X5 Dialog Insights page"}, "k-hero": {"aria-label": "The page scrolls from top to bottom: the first screen with a chart, key figures, retail chains, client results, benefits, plans, onboarding steps, materials, FAQ, services, media and the request form"}, "k-bp-sec": {"aria-label": "Desktop, tablet and mobile versions"}, "k-bp1": {"alt": "First screen on desktop"}, "k-bp2": {"alt": "First screen on a tablet"}, "k-bp3": {"alt": "First screen of the mobile version"}, "k-ch": {"aria-label": "Prototype: tabs switch the sample report, and hovering over the chart shows a tooltip with the list of metrics"}, "k-tar-sec": {"aria-label": "Interactive plan table"}, "k-vt": {"aria-label": "Table view"}, "k-tbl": {"aria-label": "Plan table"}, "k-fl-sec": {"aria-label": "Client cards"}, "k-m1": {"alt": "First screen of the mobile version: the chart card is flipped and shows the available metrics"}, "k-m2": {"alt": "Mobile version after scrolling: a “Request a demo” button has appeared in the header"}, "k-spec-sec": {"aria-label": "Tooltip spec"}, "k-sp1": {"alt": "Screen with a tooltip at the bottom right of the cursor"}}, DEFAULT = 'en';
+  var RU = {}, RU_ATTR = {};
+  document.querySelectorAll('[data-t]').forEach(function (el) { RU[el.dataset.t] = el.innerHTML; });
+  document.querySelectorAll('[data-ta]').forEach(function (el) {
+    var src = EN_ATTR[el.dataset.ta]; if (!src) return;
+    var o = {}; Object.keys(src).forEach(function (k) { o[k] = el.getAttribute(k); }); RU_ATTR[el.dataset.ta] = o;
+  });
+  function lng() { return root.lang === 'en' ? 'en' : 'ru'; }
+  function apply(l) {
+    root.lang = l;
+    document.title = l === 'en' ? 'X5 Dialog · sales landing page' : 'X5 Dialog · продающая страница';
+    document.querySelectorAll('[data-t]').forEach(function (el) { var v = l === 'en' ? EN[el.dataset.t] : RU[el.dataset.t]; if (v != null) el.innerHTML = v; });
+    document.querySelectorAll('[data-ta]').forEach(function (el) {
+      var src = l === 'en' ? EN_ATTR[el.dataset.ta] : RU_ATTR[el.dataset.ta]; if (!src) return;
+      Object.keys(src).forEach(function (k) { if (src[k] != null) el.setAttribute(k, src[k]); });
+    });
+    document.querySelectorAll('[data-href-' + l + ']').forEach(function (a) { a.setAttribute('href', a.getAttribute('data-href-' + l)); });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === l); });
+  }
+  var q = /[?&]lang=(ru|en)/.exec(location.search), saved = null;
+  try { saved = localStorage.getItem('x5-lang'); } catch (e) {}
+  var start = (q && q[1]) || saved || DEFAULT;
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.lang button');
+    if (!b || b.dataset.lang === lng()) return;
+    apply(b.dataset.lang);
+    try { localStorage.setItem('x5-lang', b.dataset.lang); } catch (e2) {}
+    try { var u = new URL(location.href); u.searchParams.set('lang', b.dataset.lang); history.replaceState(null, '', u); } catch (e3) {}
+  });
+  var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Auto-playing prototypes run a list of [delay, action] steps on a loop while the block is on screen.
+  function autoplay(el, steps) {
+    if (REDUCE) return;
+    var timer = null;
+    function run(i) {
+      var st = steps[i % steps.length];
+      timer = setTimeout(function () { if (st[1]) st[1](); run(i + 1); }, st[0]);
+    }
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting && !timer) run(0);
+        else if (!e.isIntersecting && timer) { clearTimeout(timer); timer = null; }
+      });
+    }, { threshold: .4 }).observe(el);
+  }
+
+  // Hero: the whole 1440 page scrolls block by block, then fades back to the top.
+  // Stops are design px of the 1440-wide page; the frame shows a 1440 × 1024 viewport.
+  var pp = document.getElementById('pageProto');
+  if (pp) {
+    var scr = pp.querySelector('.fp-scr'), pg = pp.querySelector('.pg');
+    var STOPS = [1340, 2300, 3010, 3970, 5040, 5700, 6400, 6930, 7930, 9000, 9860, 10730, 11671];
+    function to(px) { scr.style.setProperty('--sy', px / 1440); }
+    var steps = [[2400, null]];
+    STOPS.forEach(function (px) { steps.push([0, function () { to(px); }], [px === 11671 ? 4200 : 3600, null]); });
+    steps.push([0, function () { scr.classList.remove('on'); }], [400, function () {
+      pg.classList.add('jump'); to(0); void pg.offsetWidth; pg.classList.remove('jump'); scr.classList.add('on');
+    }]);
+    autoplay(pp, steps);
+  }
+
+  // First screen: switch tabs and hover the chart. Points are % of the 1440 × 1248 frame.
+  var cp = document.getElementById('chProto');
+  if (cp) {
+    var mark = cp.querySelector('.np-tap'), shots = cp.querySelectorAll('[data-s]');
+    function show(n) { shots.forEach(function (s) { s.classList.toggle('on', s.dataset.s === n); }); }
+    function tap(p) { mark.style.left = p[0] + '%'; mark.style.top = p[1] + '%'; mark.classList.remove('on'); void mark.offsetWidth; mark.classList.add('on'); }
+    var P = { tab1: [14.4, 53.1], tab2: [39.2, 53.1], chart1: [24, 63.7], chart2: [40, 64.9] };
+    autoplay(cp, [
+      [0, function () { show('t1'); }],
+      [1800, function () { tap(P.chart1); }], [380, function () { show('t1tip'); }],
+      [3400, function () { tap(P.tab2); }], [380, function () { show('t2'); }],
+      [1800, function () { tap(P.chart2); }], [380, function () { show('t2tip'); }],
+      [3400, function () { tap(P.tab1); }], [380, function () { show('t1'); }]
+    ]);
+  }
+
+  // Tariffs: one data set drawn twice, as the desktop table and as the mobile cards.
+  // A value is text, a list (array), '-' for a dash, '+' for a check mark, or {v, s} with a small note.
+  var tw = document.getElementById('tariffs');
+  if (tw) {
+    var T = {
+      free: { name: 'Бесплатные сервисы', desc: 'Бесплатные отчеты и инструменты для действующих поставщиков торговых сетей X5', price: { v: 'Бесплатно' },
+        tasks: 'Верхнеуровневая аналитика по категории и товарам поставщика',
+        reports: ['Анализ ключевых показателей по категории', 'Данные по ТОП-10 товарам в категории', 'ABC-дашборд по товарам поставщика', 'Кабинет планирования ценового промо'],
+        gens: 'Не ограничено', format: 'Web-отчет с онлайн-доступом', consult: '-', excel: '-', viz: '-', flex: '-', freq: '1 раз в неделю', cta: 'Получить доступ' },
+      ready: { name: 'Готовые отчеты', desc: 'Быстрый доступ к основным показателям по категории и бренду без кастомизации', price: { v: 'от 100 000 ₽', s: 'цена может увеличиться при добавлении доп. параметров' },
+        tasks: ['Анализ ключевых показателей по товарам поставщика', 'Анализ базовых показателей по категории'],
+        reports: ['Анализ позиций поставщика', 'Дайджест по категории'],
+        gens: { v: 'Единоразовая выгрузка', s: 'с возможностью обновления' }, format: ['Excel', 'PDF'], consult: '-', excel: '+', viz: ['Графики в Excel', 'PDF'],
+        flex: { v: 'Ограниченная', s: 'возможность кастомизации ограниченного набора атрибутов' }, freq: 'Единоразовая выгрузка', cta: 'Заявка на демо' },
+      sub: { name: 'Подписка', desc: 'Отчеты для анализа категорий, конкурентов и покупательских метрик с онлайн-доступом', price: { v: 'от 100 000 ₽', s: 'цена зависит от категории и срока подписки' },
+        tasks: 'Детальный анализ показателей продаж по категории и покупательским метрикам',
+        reports: ['Анализ трендов', 'Диагностика категории', 'Источники продаж', 'Миграция покупателей', 'Репертуар', 'Новинки'],
+        gens: 'Не ограничено', format: ['Web-отчет с онлайн-доступом', 'API'], consult: '6–8 часов в месяц', excel: '+', viz: 'Web-портал',
+        flex: { v: 'Ограниченная', s: 'ограниченная возможность настройки отчетов, предоставляемых в рамках подписки' }, freq: { v: 'Ежедневно', s: 'с задержкой в 3 дня' }, cta: 'Заявка на демо' },
+      adhoc: { name: 'Ad-hoc', desc: 'Отчеты под конкретный бизнес-запрос на основании брифа от заказчика', price: { v: 'от 100 000 ₽', s: 'цена зависит от категории и типа отчета' },
+        tasks: 'Кастомизированная аналитика по категории и покупательскому поведению',
+        reports: ['Все отчеты, доступные по тарифу «Подписка»', 'Профиль покупателя и LTV', 'Анализ корзины и структуры чека', 'CDT', 'Другие отчеты по брифу от клиента'],
+        gens: { v: 'Единоразовая выгрузка', s: 'с возможностью обновления' }, format: 'Excel', consult: '-', excel: '+', viz: '-',
+        flex: { v: 'Полная', s: 'возможность создания собственных запросов и отчетов на основе доступных данных' }, freq: 'Единоразовая выгрузка', cta: 'Заявка на демо' }
+    };
+    var ROWS = [['desc', 'Описание'], ['price', 'Стоимость'], ['tasks', 'Решаемые задачи'], ['reports', 'Перечень отчетов'], ['gens', 'Количество генераций отчетов'],
+      ['format', 'Формат отчетов'], ['consult', 'Консультации по продукту'], ['excel', 'Выгрузка в Excel-таблицу'], ['viz', 'Визуализация'],
+      ['flex', 'Гибкость и настраиваемость'], ['freq', 'Частота обновления данных']];
+    var CHECK = '<svg class="ok" viewBox="0 0 20 20" aria-label="Есть"><path d="M4 10.5 8 14.5 16 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    function val(v) {
+      if (v === '-') return '<span class="no" aria-label="Нет">—</span>';
+      if (v === '+') return CHECK;
+      if (Array.isArray(v)) return '<ul>' + v.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
+      if (typeof v === 'object') return v.v + (v.s ? '<span class="sub">' + v.s + '</span>' : '');
+      return v;
+    }
+    // Desktop column order and the highlighted columns follow the 1440 layout
+    var DCOLS = ['free', 'ready', 'sub', 'adhoc'], CLS = { free: 'c1', sub: 'c3' };
+    var h = '<thead><tr><th scope="col">Планы подключения</th>' + DCOLS.map(function (k) { return '<th scope="col" class="' + (CLS[k] || '') + '">' + T[k].name + '</th>'; }).join('') + '</tr></thead><tbody>';
+    ROWS.forEach(function (r) {
+      h += '<tr><th scope="row">' + r[1] + '</th>' + DCOLS.map(function (k) { return '<td class="' + (CLS[k] || '') + '">' + val(T[k][r[0]]) + '</td>'; }).join('') + '</tr>';
+    });
+    h += '<tr class="btns"><th scope="row"></th>' + DCOLS.map(function (k) { return '<td class="' + (CLS[k] || '') + '"><span class="x5-btn' + (k === 'free' ? ' w' : '') + '">' + T[k].cta + '</span></td>'; }).join('') + '</tr></tbody>';
+    tw.querySelector('.x5t').innerHTML = h;
+
+    // Mobile cards: the order of the 375 layout; the free card leaves out its empty rows
+    var MCOLS = ['free', 'sub', 'adhoc', 'ready'];
+    var ARROW = '<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    tw.querySelector('.x5t-m').innerHTML = MCOLS.map(function (k, i) {
+      var t = T[k], rows = ROWS.slice(2).filter(function (r) { return !(k === 'free' && t[r[0]] === '-'); });
+      return '<article class="x5m ' + (k === 'free' ? 'c1' : '') + '"><div class="x5m-h"><h4>' + t.name + '</h4><p>' + t.desc + '</p></div>' +
+        '<button type="button" class="x5m-tg" aria-expanded="false" aria-controls="x5m-' + i + '"><span>Подробнее о тарифе</span>' + ARROW + '</button>' +
+        '<div class="x5m-body" id="x5m-' + i + '"><div>' + rows.map(function (r) { return '<div class="x5m-r"><span class="lb">' + r[1] + '</span><div>' + val(t[r[0]]) + '</div></div>'; }).join('') + '</div></div>' +
+        '<div class="x5m-f"><span class="pr">' + t.price.v + '</span>' + (t.price.s ? '<span class="sub">' + t.price.s + '</span>' : '') + '<span class="x5-btn' + (k === 'free' ? ' w' : '') + '">' + t.cta + '</span></div></article>';
+    }).join('');
+    tw.querySelectorAll('.x5m-tg').forEach(function (b) {
+      var card = b.closest('.x5m'), body = card.querySelector('.x5m-body');
+      body.inert = true;
+      b.addEventListener('click', function () {
+        var open = !card.classList.contains('open');
+        card.classList.toggle('open', open); b.setAttribute('aria-expanded', open); body.inert = !open;
+        b.firstChild.textContent = open ? 'Скрыть описание' : 'Подробнее о тарифе';
+      });
+    });
+
+    // Desktop / mobile switch; phones start on the mobile view
+    var vt = document.querySelectorAll('.vt button');
+    function view(v) { tw.dataset.view = v; vt.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.v === v); }); }
+    vt.forEach(function (b) { b.addEventListener('click', function () { view(b.dataset.v); }); });
+    if (window.matchMedia('(max-width: 700px)').matches) view('m');
+  }
+
+  // Client cards flip on click or Enter / Space (they are buttons)
+  document.querySelectorAll('.x5c').forEach(function (c) {
+    c.addEventListener('click', function () { c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') !== 'true'); });
+  });
+
+  if (start === 'en') apply('en'); else root.lang = 'ru';
+})();
+</script>

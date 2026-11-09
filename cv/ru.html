@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Элина Сазонова · Резюме</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap">
+<style>
+/* CV: one column, plain headings and real text so ATS parsers read it; site type and colours; A4 when printed */
+:root { --ink: #1D1D1F; --muted: #6E6E73; --line: #E6E6E2; --chip: #F5F5F7; --accent: #0D99FF; --f: "Onest", system-ui, sans-serif; color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: var(--ink); font: 400 15px/1.5 var(--f); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+p, h1, h2, h3, ul { margin: 0; }
+.tools { position: sticky; top: 0; z-index: 5; background: #fff; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px max(16px, calc(50% - 400px)); border-bottom: 1px solid var(--line); font-size: 14px; }
+.tools a { text-decoration: none; color: var(--muted); }
+.tools a:hover { color: var(--ink); }
+.tools .r { display: flex; gap: 10px; align-items: center; }
+.dl { background: var(--ink); color: #fff !important; padding: 9px 16px; border-radius: 999px; font-weight: 500; }
+.cv { max-width: 800px; margin: 0 auto; padding: 48px 16px 96px; display: grid; gap: 28px; }
+.head h1 { font-weight: 500; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1; letter-spacing: -0.035em; }
+.head .role { margin-top: 8px; font-size: 18px; }
+.head .contacts { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--muted); font-size: 14px; }
+.head .contacts a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.sec { display: grid; gap: 12px; }
+.sec > h2 { font-weight: 500; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.summary { font-size: 16px; text-wrap: pretty; }
+.job { display: grid; gap: 6px; }
+.job + .job { margin-top: 10px; }
+.job-h { display: grid; gap: 1px; }
+.job-h h3 { font-weight: 400; font-size: 16px; }
+.job-h h3 b { font-weight: 600; }
+.job-h .dates { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.skills { text-wrap: pretty; }
+.skills .sep { color: #B8B8BD; }
+.skills .sk { white-space: nowrap; }
+.job .about { color: var(--muted); font-size: 14px; }
+.job ul { padding-left: 18px; display: grid; gap: 4px; }
+.job li { text-wrap: pretty; }
+.job li::marker { color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 6px 20px; }
+.grid2 dt { color: var(--muted); }
+.grid2 dd { margin: 0; }
+dl { margin: 0; }
+@media (max-width: 600px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .grid2 dd { margin-bottom: 8px; } }
+
+/* Print / PDF: A4, no toolbar, tighter type so the EN version fits one page */
+@page { size: A4; margin: 9.5mm 13mm; }
+@media print {
+  .tools { display: none; }
+  html, body { font-size: 9pt; line-height: 1.33; }
+  .cv { max-width: none; padding: 0; gap: 10pt; }
+  .head h1 { font-size: 22pt; }
+  .head .role { font-size: 12pt; margin-top: 4pt; }
+  .head .contacts { font-size: 9pt; margin-top: 7pt; }
+  .summary { font-size: 9.6pt; }
+  .sec { gap: 5pt; }
+  .sec > h2 { font-size: 8pt; padding-bottom: 4pt; }
+  .job { gap: 3pt; break-inside: avoid; }
+  .job + .job { margin-top: 4pt; }
+  .job-h h3 { font-size: 10pt; }
+  .job-h .dates, .job .about { font-size: 8.6pt; }
+  .grid2 { gap: 2pt 12pt; grid-template-columns: 7.2em minmax(0, 1fr); }
+  .job ul { gap: 1.5pt; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<div class="tools">
+  <a href="../" target="_top">← Портфолио</a>
+  <div class="r"><a href="./" target="_top">English version</a><a class="dl" href="Elina-Sazonova-CV-RU.pdf" download>Скачать PDF</a></div>
+</div>
+
+<main class="cv">
+  <header class="head">
+    <h1>Элина Сазонова</h1>
+    <p class="role">Senior Product Designer · B2B и enterprise-продукты</p>
+    <p class="contacts">
+      <span>Астана, Казахстан · Удаленно, готова к релокации</span>
+      <a href="mailto:elinasazonova.design@gmail.com">elinasazonova.design@gmail.com</a>
+      <a href="https://www.linkedin.com/in/elina-sazonova-086256238" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://t.me/elina_sazonova" target="_blank" rel="noopener">Telegram @elina_sazonova</a>
+    </p>
+  </header>
+
+  <section class="sec">
+    <h2>О себе</h2>
+    <p class="summary">Продуктовый дизайнер, 4+ года в проектировании интерфейсов. Специализируюсь на сложных B2B- и enterprise-продуктах: процессы со множеством ролей и требований регулятора, формы с зависимостями и таблицы. Веду исследования от плана до выводов, учу этому команды и подтверждаю решения UX- и продуктовыми метриками, которые подключаю с помощью AI-агента.</p>
+  </section>
+
+  <section class="sec">
+    <h2>Опыт</h2>
+    <div class="job">
+      <div class="job-h"><h3><b>Райффайзенбанк</b> / Старший дизайнер-проектировщик</h3><span class="dates">октябрь 2024 — сейчас</span></div>
+      <p class="about">ColSy — внутренняя платформа залогового обеспечения банка, заменяет легаси-систему для 12 групп пользователей</p>
+      <ul>
+        <li>Спроектировала 9 сквозных сценариев для 3 ролей: договоры страхования и обеспечения с учетом кросс-залогов, создание и изменение объектов через прогрузку файлов, критерии приемлемости. Договор страхования создается на 52% быстрее, платеж по страховке вносится на 21% быстрее</li>
+        <li>Вместе с коллегой руководила исследованиями: 60+ глубинных интервью за год; провела воркшоп и обучила 38 человек из 5 фича-команд проводить интервью от начала до конца</li>
+        <li>Веду библиотеку компонентов и паттернов ColSy: описываю компоненты по рекомендациям дизайн-комьюнити, унифицировала модальные окна, пересобрала файл макетов, навигацию и паспорт проекта</li>
+        <li>Провожу дизайн-надзор за разработкой и веду бэклог дизайн-долга, договоренности о работе с ним согласовала с PO</li>
+        <li>Подключила UX- и продуктовые метрики с помощью AI-агента: time on task, error rate, task success rate, CSAT, MAU и DAU; собрала для команды базу знаний по исследованиям с помощью AI</li>
+        <li>Помогаю командам без UX-опыта перейти на продуктовый процесс; веду ревью для стейкхолдеров и ритуалы комьюнити (ретро, App critique, Friday Talks); получила благодарственное письмо от дизайн-директора</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>Pinkman</b> / Дизайнер интерфейсов</h3><span class="dates">октябрь 2022 — сентябрь 2024</span></div>
+      <p class="about">Студия продуктового дизайна, топ-3 по версии Tagline. Клиенты: Hamkorbank, X5 Group, Росгосстрах, Газпром нефть, Росбанк, ОТП Банк, Сбер, Fun&amp;Sun</p>
+      <ul>
+        <li>Hamkorbank: редизайн сайта розничного банка на основе интервью с клиентами и исследований банка, онлайн-заявки на карты; сайт работает на этом дизайне три года</li>
+        <li>Росгосстрах: за 3 месяца спроектировала 2 крупных раздела кабинета страхового агента, 100+ сценариев и пограничных случаев для 3 ролей; защищала решения перед рабочей группой из 50 человек</li>
+        <li>X5 Dialog: продающая страница сервиса аналитики X5 Group для десктопа, планшета и телефона, сравнение 4 тарифов, которое на телефоне превращается в карточки</li>
+        <li>ОТП Банк: переделала форму обратной связи на сайте (шкала с 10 на 5 баллов, комментарий при низкой оценке), чтобы убрать мисклики на телефоне и узнавать причины недовольства</li>
+        <li>Газпром нефть: MVP кабинета подрядчика для тендеров. Росбанк: кошелек цифрового рубля в приложении. X5: приложение для приемки паллет на планшете. Сбер: ИИ-раскраска матрешки и сценарий в приложении СберФеста. Fun&amp;Sun: фильтр туров в приложении</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>Meetorra</b> / Продуктовый дизайнер</h3><span class="dates">июль — октябрь 2022</span></div>
+      <ul><li>Спроектировала библиотеку BIM-моделей архитектурного бюро (главная, карточка модели, корзина) и собрала UI-кит с нуля</li></ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>REDMADROBOT</b> / Стажер-дизайнер</h3><span class="dates">март — июль 2022</span></div>
+      <ul><li>Прошла полный цикл от исследований до передачи в разработку вместе с PO, дизайнерами и разработчиками</li></ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>Фриланс</b> / Дизайнер</h3><span class="dates">2020 — 2022</span></div>
+      <ul><li>Айдентика, брендбуки, лендинги с версткой на Tilda</li></ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Навыки</h2>
+    <dl class="grid2">
+      <dt>Исследования</dt><dd>Глубинные интервью, юзабилити-тесты, фокус-группы, немодерируемые тесты, план исследования и синтез выводов, обучение команд проведению интервью</dd>
+      <dt>Проектирование</dt><dd>UX/UI, продуктовый дизайн полного цикла, сложные B2B- и enterprise-системы, проектирование процессов, ролевые модели, формы с зависимостями, таблицы, информационная архитектура, прототипирование, адаптивный дизайн для десктопа, планшета и телефона, дизайн-системы: библиотеки компонентов и паттернов, дизайн-надзор и работа с дизайн-долгом</dd>
+      <dt>Метрики</dt><dd>UX-метрики: time on task, error rate, task success rate; CSAT, MAU/DAU, продуктовая аналитика; подключение метрик с помощью AI-агентов</dd>
+      <dt>Командная работа</dt><dd>Кросс-функциональные команды, фасилитация командных встреч, внедрение продуктового процесса в командах без UX-опыта, работа со стейкхолдерами и рабочими группами, Agile</dd>
+      <dt>Инструменты</dt><dd>Figma, Miro, Notion, Pathway, Claude, Claude Code, ChatGPT, Codex, VS Code, GitLab, GitHub</dd>
+    </dl>
+  </section>
+
+  <section class="sec">
+    <h2>Образование и языки</h2>
+    <dl class="grid2">
+      <dt>2013 — 2018</dt><dd>Специалитет, строительство железных дорог, мостов и транспортных тоннелей. Квалификация — инженер путей сообщения</dd>
+      <dt>Курсы</dt><dd>AI Native Product Designer, Pixel (in progress) · UX Research for Designers, Yandex (professional development) · FAANG UI Course, Igor Kulemza · UX/UI Designer, Uprock · Skillbox</dd>
+      <dt>Языки</dt><dd>Русский — родной · Английский — B1</dd>
+    </dl>
+  </section>
+</main>
+
+<script>
+// "Download PDF": inside the claude.ai viewer plain download links are blocked, so the button fetches the
+// published PDF and hands it to the viewer through the downloads capability (the viewer confirms the save).
+// Anywhere else (the site on its own domain) the ordinary <a download> link does the job.
+(function () {
+  var a = document.querySelector('.dl');
+  if (!a) return;
+  var downloads = null;
+  function hook() { if (window.claude && window.claude.use) window.claude.use('downloads').then(function (d) { downloads = d; }).catch(function () {}); }
+  hook(); if (!window.claude) setTimeout(hook, 600);
+  a.addEventListener('click', function (e) {
+    if (!downloads) return;
+    e.preventDefault();
+    var label = a.textContent;
+    fetch(a.getAttribute('href')).then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); })
+      .then(function (blob) { return downloads.save({ filename: a.getAttribute('href'), data: blob }); })
+      .catch(function (err) {
+        if (err && (err.code === 'declined' || err.code === 'rate_limited')) return;
+        location.href = a.getAttribute('href');
+      })
+      .then(function () { a.textContent = label; });
+  });
+})();
+</script>
+</body>
+</html>

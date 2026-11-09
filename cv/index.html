@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elina Sazonova · CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap">
+<style>
+/* CV: one column, plain headings and real text so ATS parsers read it; site type and colours; A4 when printed */
+:root { --ink: #1D1D1F; --muted: #6E6E73; --line: #E6E6E2; --chip: #F5F5F7; --accent: #0D99FF; --f: "Onest", system-ui, sans-serif; color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: var(--ink); font: 400 15px/1.5 var(--f); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+p, h1, h2, h3, ul { margin: 0; }
+.tools { position: sticky; top: 0; z-index: 5; background: #fff; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px max(16px, calc(50% - 400px)); border-bottom: 1px solid var(--line); font-size: 14px; }
+.tools a { text-decoration: none; color: var(--muted); }
+.tools a:hover { color: var(--ink); }
+.tools .r { display: flex; gap: 10px; align-items: center; }
+.dl { background: var(--ink); color: #fff !important; padding: 9px 16px; border-radius: 999px; font-weight: 500; }
+.cv { max-width: 800px; margin: 0 auto; padding: 48px 16px 96px; display: grid; gap: 28px; }
+.head h1 { font-weight: 500; font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1; letter-spacing: -0.035em; }
+.head .role { margin-top: 8px; font-size: 18px; }
+.head .contacts { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--muted); font-size: 14px; }
+.head .contacts a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+.sec { display: grid; gap: 12px; }
+.sec > h2 { font-weight: 500; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.summary { font-size: 16px; text-wrap: pretty; }
+.job { display: grid; gap: 6px; }
+.job + .job { margin-top: 10px; }
+.job-h { display: grid; gap: 1px; }
+.job-h h3 { font-weight: 400; font-size: 16px; }
+.job-h h3 b { font-weight: 600; }
+.job-h .dates { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.skills { text-wrap: pretty; }
+.skills .sep { color: #B8B8BD; }
+.skills .sk { white-space: nowrap; }
+.job .about { color: var(--muted); font-size: 14px; }
+.job ul { padding-left: 18px; display: grid; gap: 4px; }
+.job li { text-wrap: pretty; }
+.job li::marker { color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 6px 20px; }
+.grid2 dt { color: var(--muted); }
+.grid2 dd { margin: 0; }
+dl { margin: 0; }
+@media (max-width: 600px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .grid2 dd { margin-bottom: 8px; } }
+
+/* Print / PDF: A4, no toolbar, tighter type so the EN version fits one page */
+@page { size: A4; margin: 9.5mm 13mm; }
+@media print {
+  .tools { display: none; }
+  html, body { font-size: 9pt; line-height: 1.33; }
+  .cv { max-width: none; padding: 0; gap: 10pt; }
+  .head h1 { font-size: 22pt; }
+  .head .role { font-size: 12pt; margin-top: 4pt; }
+  .head .contacts { font-size: 9pt; margin-top: 7pt; }
+  .summary { font-size: 9.6pt; }
+  .sec { gap: 5pt; }
+  .sec > h2 { font-size: 8pt; padding-bottom: 4pt; }
+  .job { gap: 3pt; break-inside: avoid; }
+  .job + .job { margin-top: 4pt; }
+  .job-h h3 { font-size: 10pt; }
+  .job-h .dates, .job .about { font-size: 8.6pt; }
+  .grid2 { gap: 2pt 12pt; grid-template-columns: 7.2em minmax(0, 1fr); }
+  .job ul { gap: 1.5pt; }
+  a { text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<div class="tools">
+  <a href="../" target="_top">← Portfolio</a>
+  <div class="r"><a href="ru.html" target="_top">Русская версия</a><a class="dl" href="Elina-Sazonova-CV-EN.pdf" download>Download PDF</a></div>
+</div>
+
+<main class="cv">
+  <header class="head">
+    <h1>Elina Sazonova</h1>
+    <p class="role">Senior Product Designer · B2B and enterprise products</p>
+    <p class="contacts">
+      <span>Astana, Kazakhstan · Remote, open to relocation</span>
+      <a href="mailto:elinasazonova.design@gmail.com">elinasazonova.design@gmail.com</a>
+      <a href="https://www.linkedin.com/in/elina-sazonova-086256238" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://t.me/elina_sazonova" target="_blank" rel="noopener">Telegram @elina_sazonova</a>
+    </p>
+  </header>
+
+  <section class="sec">
+    <h2>Summary</h2>
+    <p class="summary">Product designer with 4+ years in interface design for complex B2B and enterprise products: multi-role, regulated processes, dense forms and tables. I run research, teach teams to do it, and back decisions with UX and product metrics</p>
+  </section>
+
+  <section class="sec">
+    <h2>Experience</h2>
+    <div class="job">
+      <div class="job-h"><h3><b>Raiffeisenbank</b> / Senior Product Designer</h3><span class="dates">Oct 2024 – Present</span></div>
+      <p class="about">ColSy, the bank’s internal collateral platform, replacing a legacy system for 12 user groups</p>
+      <ul>
+        <li>Designed 9 end-to-end flows for 3 roles, from insurance and collateral contracts to file-based object upload: an insurance contract is now created 52% faster, a payment 21% faster</li>
+        <li>Led research with a colleague: 60+ in-depth interviews in a year; ran a workshop and trained 38 people from 5 feature teams to run interviews end to end</li>
+        <li>Maintain the ColSy component and pattern library to community standards; unified modals and restructured the Figma workspace</li>
+        <li>Run design review of the build and a design-debt backlog agreed with the PO; set up UX and product metrics with an AI agent</li>
+        <li>Help teams new to UX adopt a product process; run stakeholder reviews and community retros; letter of thanks from the design director</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>Pinkman</b> / Interface Designer</h3><span class="dates">Oct 2022 – Sep 2024</span></div>
+      <p class="about">Design studio. Clients: Hamkorbank, X5 Group, Rosgosstrakh, Gazprom Neft, Rosbank, OTP Bank, Sber, Fun&amp;Sun</p>
+      <ul>
+        <li>Hamkorbank: redesigned a retail bank’s website based on user interviews and the bank’s research; added online card applications; the site has run on this design for 3 years</li>
+        <li>Rosgosstrakh: designed 2 major sections of an insurance agent portal in 3 months, 100+ scenarios and edge cases for 3 roles; defended decisions before a 50-person working group</li>
+        <li>X5 Dialog: sales landing page for X5 Group’s analytics product, with a 4-plan comparison that turns into cards on mobile</li>
+        <li>Also: OTP Bank feedback form for mobile, Gazprom Neft supplier portal MVP, Rosbank digital ruble wallet, X5 pallet-receiving tablet app</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>Meetorra</b> / Product Designer</h3><span class="dates">Jul 2022 – Oct 2022</span></div>
+      <ul><li>Designed a BIM model library for an architecture studio (home page, model card, cart) and built its UI kit from scratch</li></ul>
+    </div>
+    <div class="job">
+      <div class="job-h"><h3><b>REDMADROBOT</b> / Design Intern</h3><span class="dates">Mar 2022 – Jul 2022</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Skills</h2>
+    <dl class="grid2">
+      <dt>Research</dt><dd>In-depth interviews, usability testing, focus groups, unmoderated tests, research synthesis, training teams to run interviews</dd>
+      <dt>Design</dt><dd>UX/UI, end-to-end design, complex B2B and enterprise systems, workflow design, role-based access, forms and data tables, information architecture, prototyping, design systems: component and pattern libraries</dd>
+      <dt>Metrics</dt><dd>UX metrics: time on task, error rate, task success rate; CSAT, MAU/DAU, product analytics; metrics setup with AI agents</dd>
+      <dt>Collaboration</dt><dd>Cross-functional teams, meeting facilitation, product process adoption, stakeholder management, Agile</dd>
+      <dt>Tools</dt><dd>Figma, Miro, Notion, Pathway, Claude, Claude Code, ChatGPT, Codex, VS Code, GitLab, GitHub</dd>
+    </dl>
+  </section>
+
+  <section class="sec">
+    <h2>Education and languages</h2>
+    <dl class="grid2">
+      <dt>2013 – 2018</dt><dd>Specialist degree, Railway Engineering (railways, bridges and transport tunnels)</dd>
+      <dt>Courses</dt><dd>AI-Native Product Designer, Pixel (in progress) · UX Research for Designers, Yandex</dd>
+      <dt>Languages</dt><dd>Russian — native · English — B1</dd>
+    </dl>
+  </section>
+</main>
+
+<script>
+// "Download PDF": inside the claude.ai viewer plain download links are blocked, so the button fetches the
+// published PDF and hands it to the viewer through the downloads capability (the viewer confirms the save).
+// Anywhere else (the site on its own domain) the ordinary <a download> link does the job.
+(function () {
+  var a = document.querySelector('.dl');
+  if (!a) return;
+  var downloads = null;
+  function hook() { if (window.claude && window.claude.use) window.claude.use('downloads').then(function (d) { downloads = d; }).catch(function () {}); }
+  hook(); if (!window.claude) setTimeout(hook, 600);
+  a.addEventListener('click', function (e) {
+    if (!downloads) return;
+    e.preventDefault();
+    var label = a.textContent;
+    fetch(a.getAttribute('href')).then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); })
+      .then(function (blob) { return downloads.save({ filename: a.getAttribute('href'), data: blob }); })
+      .catch(function (err) {
+        if (err && (err.code === 'declined' || err.code === 'rate_limited')) return;
+        location.href = a.getAttribute('href');
+      })
+      .then(function () { a.textContent = label; });
+  });
+})();
+</script>
+</body>
+</html>

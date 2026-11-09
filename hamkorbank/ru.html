@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hamkorbank · редизайн сайта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Golos+Text:wght@400;500&family=Montserrat:wght@600&display=swap">
+<style>
+/* Hamkorbank case: the same editorial grid as ColSy (statement, then title-left / text-right pairs), with full-bleed
+   grey bands of real interface between the text blocks, after karoliskosas.com, and a dennissnellenberg-style hero */
+:root {
+  --accent: #0D99FF;
+  --bg: #FFFFFF;
+  --ink: #1D1D1F;
+  --muted: #6E6E73;
+  --line: #E6E6E2;
+  --chip: #F5F5F7;
+  --f-body: "Onest", system-ui, sans-serif;
+  --max: 1200px;
+  --gap: 48px;
+  --radius: 28px;
+  --hk: #1FBF5A;
+  --hk-mint: #EAF7F0;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 18px/1.65 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 160px;
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 900px) { body { padding-left: max(48px, env(safe-area-inset-left, 0px)); padding-right: max(48px, env(safe-area-inset-right, 0px)); } }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+img { display: block; max-width: 100%; height: auto; }
+p, h1, h2, h3, ul, ol, figure, dl, dd, blockquote { margin: 0; }
+
+/* ---------- Header ---------- */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+@media (min-width: 900px) { .bar { margin-inline: calc(-1 * max(48px, env(safe-area-inset-left, 0px))); padding-inline: max(48px, env(safe-area-inset-left, 0px)); } }
+.bar-in { max-width: var(--max); margin-inline: auto; min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 15px; }
+.bar a { text-decoration: none; color: var(--muted); }
+.bar a:hover { color: var(--ink); }
+.bar .brand { display: flex; gap: 20px; align-items: center; color: var(--muted); }
+.lang { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--chip); }
+.lang button { font: 500 13px/1 var(--f-body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 10px; cursor: pointer; transition: background-color .2s, color .2s; }
+.lang button[aria-pressed="true"] { background: var(--bg); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
+.lang button:hover { color: var(--ink); }
+
+/* ---------- Grid and type ---------- */
+.page { max-width: var(--max); margin-inline: auto; display: grid; gap: 140px; padding-top: 72px; }
+.page > * { min-width: 0; }
+.stack { display: grid; gap: 20px; align-content: start; }
+.block { display: grid; gap: 56px; }
+.label { font-size: 15px; color: var(--muted); }
+h2 { font-weight: 400; font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.18; letter-spacing: -0.02em; text-wrap: balance; max-width: 22em; }
+.statement { font-size: clamp(1.9rem, 3.6vw, 2.9rem); line-height: 1.2; }
+/* title on the left, description on the right */
+h2.wide { max-width: none; }
+.full { grid-column: 1 / -1; }
+.text { display: grid; gap: 16px; }
+.desc p { color: var(--muted); text-wrap: pretty; }
+.desc strong { color: var(--ink); font-weight: inherit; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px var(--gap); }
+.two p { color: var(--muted); text-wrap: pretty; }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px var(--gap); padding-top: 32px; border-top: 1px solid var(--line); }
+.kv h3 { font-weight: 500; font-size: 20px; line-height: 1.4; display: flex; gap: 16px; align-items: baseline; }
+.kv h3 .n { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.kv p { color: var(--muted); text-wrap: pretty; }
+.kv p b { font-weight: 400; color: var(--ink); }
+.block + .band, .band + .block { margin-top: -60px; }
+@media (max-width: 860px) {
+  .page { gap: 96px; padding-top: 40px; }
+  .kv { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .kv p + h3 { margin-top: 24px; }
+  .block + .band, .band + .block { margin-top: -40px; }
+}
+
+/* ---------- Hero ---------- */
+.hk-hero { display: grid; gap: 28px; }
+.hk-eyebrow { font-size: 17px; color: var(--muted); }
+.hk-title { font-weight: 500; font-size: clamp(3.4rem, 10vw, 8.6rem); line-height: .95; letter-spacing: -0.045em; }
+.hk-lead { font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.4; max-width: 34em; text-wrap: pretty; }
+/* role and results: two blocks without rules, as on the ColSy page */
+.row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px var(--gap); align-items: start; }
+.hk-meta { margin-top: 20px; }
+.facts { display: grid; gap: 10px; align-content: start; }
+.facts ul { list-style: none; padding: 0; display: grid; gap: 10px; }
+@media (max-width: 860px) { .row { grid-template-columns: minmax(0, 1fr); } }
+/* full-bleed dotted canvas, the same as the ColSy cover */
+.canvas {
+  margin-inline: calc(50% - 50vw); padding: clamp(48px, 7vw, 104px) max(16px, env(safe-area-inset-left, 0px));
+  background-color: var(--chip);
+  background-image: radial-gradient(circle, #C4C4C9 1px, transparent 1.3px);
+  background-size: 24px 24px; background-position: center;
+}
+.hk-stage { margin-top: -80px; }
+.hk-shot { position: relative; width: min(100%, 1120px); margin-inline: auto; }
+.hk-shot > img { width: 100%; border-radius: clamp(14px, 2.2vw, 24px); box-shadow: 0 0 0 1px #CBCBD2, 0 30px 60px -40px rgba(29, 29, 31, .35); }
+/* the big round link to the live site, after dennissnellenberg.com */
+.hk-live { position: absolute; z-index: 5; right: clamp(16px, 5%, 64px); top: 0; transform: translateY(-50%); width: clamp(116px, 13vw, 168px); aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: #fff; text-decoration: none; display: grid; place-content: center; justify-items: center; gap: 6px; font-weight: 500; font-size: clamp(15px, 1.4vw, 18px); box-shadow: 0 18px 40px -18px rgba(13, 153, 255, .7); transition: transform .35s cubic-bezier(.2, .7, .2, 1), background-color .2s; }
+.hk-live svg { width: 18px; height: 18px; }
+.hk-live:hover { transform: translateY(-50%) scale(1.06); background: #0A86E0; }
+.hk-live.inline { position: static; transform: none; }
+.hk-live.inline:hover { transform: scale(1.06); }
+.hk-end { display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+.lk-copy { max-width: 40rem; color: var(--muted); text-wrap: pretty; }
+.lk-copy b { font-weight: 400; color: var(--ink); }
+
+/* ---------- Bands with interface ---------- */
+.band { margin-inline: calc(50% - 50vw); padding: clamp(48px, 7vw, 96px) max(16px, env(safe-area-inset-left, 0px)); background: var(--chip); }
+.band-in { width: min(100%, 1120px); margin-inline: auto; display: grid; gap: 24px; }
+.hk-col { gap: clamp(20px, 3vw, 32px); }
+.shot { display: grid; gap: 12px; }
+.shot img { width: 100%; border-radius: clamp(10px, 1.6vw, 18px); box-shadow: 0 0 0 1px #D2D2D8; background: #fff; }
+.shot.bare img { box-shadow: none; }
+.shot figcaption { font-size: 14px; color: var(--muted); }
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(20px, 3vw, 32px); align-items: start; }
+/* UI kit block: a ready composition with its own margins, edge to edge on the band */
+.kit-full { padding: 0; }
+.kit-full img { display: block; width: 100%; max-width: 1980px; margin-inline: auto; }
+/* Two kit sections cropped by the band edges */
+.kit2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(16px, 3vw, 32px); align-items: start; height: clamp(420px, 56vw, 680px); overflow: hidden; margin-bottom: calc(-1 * clamp(48px, 7vw, 96px)); }
+.kit2 figure:last-child { margin-top: clamp(40px, 6vw, 88px); }
+.kit2 img { width: 100%; border-radius: 18px 18px 0 0; box-shadow: 0 0 0 1px #E1E1E6, 0 24px 60px -30px rgba(29, 29, 31, .3); }
+/* Auto-playing navigation prototype */
+.fp { container-type: inline-size; }
+.fp-scr { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 round var(--r)); opacity: 0; transition: opacity .35s ease; --sy: 0; }
+.fp-scr.on { opacity: 1; }
+.fp-scr img { display: block; width: 100%; height: auto; transform: translateY(calc(var(--sy) * -100cqw)); transition: transform 2.4s cubic-bezier(.45, 0, .25, 1); }
+.fp-note { margin-top: 14px; font-size: 14px; color: var(--muted); text-align: center; }
+.fp-note:empty { display: none; }
+.np-fig { display: grid; gap: 16px; width: min(100%, 1120px); margin-inline: auto; }
+.np-fig figcaption { font-size: 14px; color: var(--muted); }
+.np { --r: clamp(14px, 2.2vw, 24px); position: relative; isolation: isolate; aspect-ratio: 1440 / 1024; border-radius: var(--r); overflow: hidden; background: #fff; box-shadow: 0 30px 60px -40px rgba(29, 29, 31, .35); }
+/* The outline sits on its own layer above the screens, so the animated screens can't cover it at the rounded corners. */
+.np::after { content: ""; position: absolute; inset: 0; z-index: 4; border-radius: inherit; box-shadow: inset 0 0 0 1px #CBCBD2; pointer-events: none; }
+.np-shot { position: absolute; inset: 0; width: 100%; height: 100%; clip-path: inset(0 round var(--r)); opacity: 0; transition: opacity .35s ease; }
+.np-shot.on { opacity: 1; }
+.np-tap { position: absolute; z-index: 3; width: clamp(30px, 3.4vw, 46px); aspect-ratio: 1; border-radius: 50%; background: rgba(29, 29, 31, .16); box-shadow: 0 0 0 2px rgba(255, 255, 255, .8); transform: translate(-50%, -50%); opacity: 0; pointer-events: none; }
+.np-tap.on { animation: npTapMark .7s ease-out; }
+@keyframes npTapMark { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.5); } 25% { opacity: 1; transform: translate(-50%, -50%) scale(.85); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); } }
+.np-cursor { position: absolute; left: 52%; top: 62%; z-index: 2; width: clamp(11px, 1.4vw, 18px); pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .25)); transition: left .9s cubic-bezier(.45, 0, .2, 1), top .9s cubic-bezier(.45, 0, .2, 1); }
+.np-cursor svg { display: block; width: 100%; height: auto; }
+.np-cursor::after { content: ""; position: absolute; left: -9px; top: -9px; width: 20px; height: 20px; border-radius: 50%; background: rgba(13, 153, 255, .35); opacity: 0; }
+.np-cursor.tap::after { animation: npTap .45s ease-out; }
+@keyframes npTap { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .np-cursor, .np-shot, .fp-scr, .fp-scr img { transition: none; } }
+.duo2 .shot img { box-shadow: none; }
+.duo2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); }
+@media (max-width: 700px) { .duo2 { grid-template-columns: minmax(0, 1fr) !important; } }
+.mock2 { display: grid; grid-template-columns: repeat(2, minmax(0, 300px)); justify-content: center; gap: clamp(24px, 8vw, 120px); }
+.mock2 figure { display: grid; gap: 20px; justify-items: center; }
+.mock2 img { width: 100%; filter: drop-shadow(0 30px 40px rgba(29, 29, 31, .18)); }
+.mock2 figcaption { font-size: 15px; color: var(--muted); }
+.kit { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.kit .w2 { grid-column: 1 / -1; }
+.hk-research { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: stretch; gap: clamp(24px, 4vw, 56px); }
+/* Survey chart drawn right on the grey band */
+.survey { display: grid; gap: 28px; align-content: center; background: #fff; border-radius: 24px; padding: clamp(24px, 3.4vw, 44px); }
+.sv-h { font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.25; letter-spacing: -0.01em; }
+.sv { list-style: none; padding: 0; display: grid; gap: 12px; }
+.sv li { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr) 3rem; gap: 16px; align-items: center; font-size: 15px; line-height: 1.3; color: var(--muted); }
+.sv-t { height: 10px; }
+.sv-b { display: block; height: 100%; width: calc(var(--v) / 58 * 100%); border-radius: 5px; background: #D2D2D8; }
+.sv b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.sv .top { color: var(--ink); font-size: 16px; }
+.sv .top .sv-t { height: 14px; }
+.sv .top .sv-b { background: var(--hk); border-radius: 7px; }
+.survey figcaption { font-size: 14px; color: var(--muted); }
+@media (max-width: 600px) { .sv li { grid-template-columns: minmax(0, 1fr) 3rem; gap: 6px 12px; } .sv-l { grid-column: 1 / -1; } }
+/* Interview insights as speech bubbles */
+.insights { display: grid; gap: 16px; align-content: center; }
+.ins-h { font-size: 15px; color: var(--muted); }
+.insights blockquote { justify-self: start; max-width: 92%; background: #fff; border-radius: 26px 26px 26px 6px; padding: 22px 26px; font-size: clamp(1.1rem, 1.6vw, 1.3rem); line-height: 1.4; box-shadow: 0 18px 40px -28px rgba(29, 29, 31, .35); }
+.insights blockquote:nth-of-type(2) { justify-self: end; background: var(--hk); color: #fff; border-radius: 26px 26px 6px 26px; }
+.insights blockquote::before { content: "«"; } .insights blockquote::after { content: "»"; }
+:root[lang="en"] .insights blockquote::before { content: "“"; } :root[lang="en"] .insights blockquote::after { content: "”"; }
+@media (max-width: 860px) {
+  .duo, .hk-research, .kit { grid-template-columns: minmax(0, 1fr); }
+  .phones { padding-inline: 0; }
+}
+
+/* ---------- Before / after slider (same component as ColSy chapter 3) ---------- */
+.ba-wrap { display: grid; }
+.ba { position: relative; width: 100%; aspect-ratio: 2169 / 1100; border-radius: clamp(12px, 2vw, 22px); overflow: hidden; background: #fff; --p: 50%; touch-action: pan-y; }
+.ba::after { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; box-shadow: inset 0 0 0 1px #D9D9DE; pointer-events: none; }
+.ba img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+.ba-top { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--p)) 0 0); }
+.ba-line { position: absolute; top: 0; bottom: 0; left: var(--p); width: 2px; margin-left: -1px; background: #C4C4C9; pointer-events: none; }
+.ba-knob { position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: #D1F178; box-shadow: 0 6px 18px -6px rgba(29, 29, 31, .35); display: grid; place-items: center; }
+.ba-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; }
+.ba-tags { display: flex; justify-content: space-between; margin-top: 12px; font-size: 15px; color: var(--muted); }
+.ba-cap { margin: 24px auto 0; max-width: 46rem; color: var(--muted); text-align: center; text-wrap: balance; }
+.ba-cap b { font-weight: 400; color: var(--ink); }
+@media (max-width: 734px) { .ba-knob { width: 36px; height: 36px; margin: -18px 0 0 -18px; } }
+
+/* ---------- Interactive Hamkorbank components (rebuilt from the UI kit) ---------- */
+.hkui { --f-body: "Golos Text", system-ui, sans-serif; font-family: var(--f-body); background: #fff; border-radius: 24px; box-shadow: 0 0 0 1px #E1E1E6; padding: clamp(20px, 3vw, 32px); font-size: 16px; line-height: 1.4; }
+.hkui button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+.hkui .fl { display: block; font-size: 16px; color: #6B6E75; margin-bottom: 8px; }
+.seg2 { display: inline-flex; padding: 4px; border-radius: 10px; background: #EEF0F3; gap: 2px; margin-bottom: 24px; flex-wrap: wrap; }
+.seg2 button { padding: 10px 18px; border-radius: 8px; font-weight: 500; transition: background-color .2s, color .2s; }
+.seg2 button.on { background: var(--hk); color: #fff; }
+.seg2 button:not(.on):hover { background: #E2E5EA; }
+.go { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 28px; border-radius: 10px; background: var(--hk); color: #fff; font-weight: 500; white-space: nowrap; }
+/* converter */
+.conv-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto; gap: 16px; align-items: end; }
+.conv .fi { display: flex; align-items: center; height: 56px; border: 1px solid #D9DCE1; border-radius: 10px; background: #fff; overflow: hidden; transition: border-color .2s, box-shadow .2s; }
+.conv .fi:focus-within { border-color: var(--hk); box-shadow: 0 0 0 3px rgba(31, 191, 90, .15); }
+.conv .amt { flex: 1; min-width: 0; height: 100%; border: 0; padding: 0 16px; font: 500 17px var(--f-body); color: var(--ink); background: none; outline: none; }
+.conv .ccy { display: flex; align-items: center; gap: 8px; height: 100%; padding: 0 16px; border-left: 1px solid #D9DCE1; font-weight: 500; font-size: 16px; color: var(--ink); white-space: nowrap; }
+.conv .ccy .flag { display: block; flex: none; clip-path: inset(0 round 4px); }
+/* Both labels share one cell, so the button keeps the width of the longer one. */
+.go-sw { display: inline-grid; }
+.go-sw > span { grid-area: 1 / 1; text-align: center; }
+.go-sw > span + span, .go-sw.branch > span:first-child { visibility: hidden; }
+.go-sw.branch > span + span { visibility: visible; }
+.conv .out { padding-left: 16px; justify-content: space-between; background: #F7F8FA; }
+.conv .res { font-weight: 500; font-size: 17px; font-variant-numeric: tabular-nums; }
+.swap { width: 48px; height: 56px; border-radius: 10px !important; background: #EEF0F3 !important; display: grid; place-items: center; transition: transform .3s cubic-bezier(.2, .7, .2, 1), background-color .2s; }
+.swap:hover { background: #E2E5EA !important; }
+.swap.turn { transform: rotate(180deg); }
+.conv-note { margin-top: 16px; font-size: 14px; color: #6B6E75; }
+.res.flash { animation: hkFlash .5s ease; }
+@keyframes hkFlash { from { color: var(--hk); } to { color: var(--ink); } }
+@media (max-width: 860px) { .conv-row { grid-template-columns: minmax(0, 1fr); } .swap { justify-self: center; transform: rotate(90deg); } .swap.turn { transform: rotate(270deg); } }
+/* calculator */
+.calc { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 32px); }
+.calc-l { display: grid; gap: 22px; align-content: start; }
+.calc-l .seg2 { margin-bottom: 0; justify-self: start; }
+.slbox { --f: .5; position: relative; height: 56px; border: 1px solid #D9DCE1; border-radius: 10px; display: flex; align-items: center; padding: 0 16px; font: 400 16px var(--f-body); font-variant-numeric: tabular-nums;
+ background: #fff; }
+/* The filled track runs along the field's bottom edge and follows its corner rounding. */
+.slbox::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none; background: linear-gradient(var(--hk), var(--hk)) left bottom / calc(8px + (100% - 16px) * var(--f)) 3px no-repeat; }
+.slbox:focus-within { border-color: var(--hk); }
+.slbox input[type=range] { z-index: 1; position: absolute; left: -1px; right: -1px; bottom: -7.5px; width: calc(100% + 2px); height: 16px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
+.slbox input[type=range]::-webkit-slider-runnable-track { height: 16px; background: transparent; }
+.slbox input[type=range]::-moz-range-track { height: 16px; background: transparent; }
+.slbox input[type=range]::-moz-range-progress { background: transparent; }
+.slbox input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--hk); border: 0; }
+.slbox input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--hk); border: 0; }
+.slm { display: flex; justify-content: space-between; margin-top: 14px; font-size: 13px; color: #8A8D93; }
+.rad label { display: inline-flex; gap: 12px; align-items: flex-start; margin-right: 28px; cursor: pointer; }
+.rad input { position: absolute; opacity: 0; }
+.rad i { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #C9CCD2; flex: none; margin-top: 1px; transition: border .15s; }
+.rad input:checked + i { border: 6px solid var(--hk); }
+.rad input:focus-visible + i { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rad small { color: #6B6E75; font-size: 14px; }
+.calc-r { background: var(--hk-mint); border-radius: 18px; padding: clamp(20px, 3vw, 32px); display: grid; align-content: space-between; gap: 32px; }
+.cr-grid { display: flex; flex-wrap: wrap; gap: 24px 40px; }
+.cr-grid > :last-child { flex-basis: 100%; }
+.big2 { display: block; font-family: "Montserrat", var(--f-body); font-weight: 600; font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.15; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chips2 { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips2 span { display: inline-block; padding: 6px 12px; border-radius: 6px; background: #B9E5CC; font-size: 14px; }
+.cr-foot { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.cr-link { font-size: 14px; color: #6B6E75; }
+@media (max-width: 860px) { .calc { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Result and next ---------- */
+.results { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px var(--gap); }
+.big { font-variant-numeric: tabular-nums; font-size: clamp(3.6rem, 7vw, 6.2rem); line-height: .95; letter-spacing: -0.05em; }
+.big-sub { font-size: 18px; color: var(--muted); }
+@media (max-width: 860px) { .results { grid-template-columns: minmax(0, 1fr); } }
+.next { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; text-decoration: none; border-top: 1px solid var(--line); padding-top: 24px; }
+.next .arr { font-size: 32px; transition: color .2s; }
+.next h2 { transition: color .2s; }
+.next:hover h2, .next:hover .arr { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
+<header class="bar">
+  <div class="bar-in">
+    <a data-t="k0" class="back" href="../" target="_top">← Все проекты</a>
+    <div class="brand"><span>Hamkorbank</span><span class="lang" role="group" aria-label="Язык / Language"><button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></span></div>
+  </div>
+</header>
+
+<main class="page" id="top">
+  <!-- HERO: title, facts, live site on the dotted canvas with a big round link -->
+  <section class="hk-hero" aria-labelledby="hk-h">
+    <p class="hk-eyebrow" data-t="k1">Редизайн сайта банка</p>
+    <h1 id="hk-h" class="hk-title">Hamkorbank</h1>
+    <p class="hk-lead" data-t="k2">Сайт розничного банка в Узбекистане, на котором продукт находят за пару кликов, курс доллара всегда перед глазами, а карту или кредит можно оформить онлайн</p>
+    <div class="row hk-meta">
+      <div class="facts">
+        <p class="label" data-t="k3">Роль</p>
+        <ul>
+          <li data-t="k4">Пользовательские исследования, дизайн, UI-kit, прототип</li>
+        </ul>
+      </div>
+      <div class="facts">
+        <p class="label" data-t="k5">Результаты</p>
+        <ul>
+          <li data-t="k8b">Карту и другие продукты можно оформить прямо на сайте, а не только в мобильном приложении</li>
+          <li data-t="k7">Сайт запущен и работает на этом дизайне</li>
+          <li data-t="k8">Курс доллара в шапке и онлайн-конвертер выросли из интервью</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="canvas hk-stage" aria-label="Главная страница сайта Hamkorbank" data-ta="k-stage">
+    <div class="hk-shot">
+      <div class="np fp" id="flowProto" role="img" aria-label="Прототип сайта: главная, все кредиты, страница кредита, меню и список вкладов, страница вклада, карта отделений и карточка отделения" data-ta="k-hero">
+        <div class="fp-scr on" data-s="home"><img src="img/pr-home.jpg" width="2160" height="1842" alt=""></div>
+        <div class="fp-scr" data-s="credits"><img src="img/pr-credits-v2.jpg" width="2160" height="3450" alt="" loading="lazy"></div>
+        <div class="fp-scr" data-s="credit"><img src="img/pr-credit-v2.jpg" width="2160" height="2694" alt="" loading="lazy"></div>
+        <div class="fp-scr" data-s="menu"><img src="img/pr-menu.jpg" width="2160" height="1536" alt="" loading="lazy"></div>
+        <div class="fp-scr" data-s="deposits"><img src="img/pr-deposits-v2.jpg" width="2160" height="2898" alt="" loading="lazy"></div>
+        <div class="fp-scr" data-s="deposit"><img src="img/pr-deposit.jpg" width="2160" height="2928" alt="" loading="lazy"></div>
+        <div class="fp-scr" data-s="branches"><img src="img/pr-branch-list-v2.jpg" width="2160" height="1536" alt="" loading="lazy"></div>
+        <span class="np-tap" aria-hidden="true"></span>
+        <div class="fp-scr" data-s="branch"><img src="img/pr-branch-card.jpg" width="2160" height="1536" alt="" loading="lazy"></div>
+      </div>
+      <p class="fp-note" data-t="kfn"></p>
+      <a class="hk-live" href="https://hamkorbank.uz/" target="_blank" rel="noopener"><span data-t="k9">Открыть сайт</span><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 13 13 5M6 5h7v7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </section>
+
+  <!-- SITUATION -->
+  <section class="block" aria-labelledby="s-h">
+    <div class="stack">
+      <p class="label" data-t="k10">Ситуация</p>
+      <h2 id="s-h" class="wide" data-t="k11">Старый сайт не продавал: карту нельзя было оформить онлайн, а люди уходили с первой страницы</h2>
+    </div>
+    <div class="two">
+      <p data-t="ks1">Карту нельзя было оформить на сайте, только в мобильном приложении. Сайт не работал как канал продаж, а пользователь не продвигался дальше первой страницы.</p>
+      <p data-t="ks2">Информацию о продуктах было сложно найти: боковое меню забирало место, а нужный раздел приходилось искать. К тому же старый дизайн не помогал банку выделиться среди конкурентов.</p>
+    </div>
+  </section>
+
+  <!-- TASK -->
+  <section class="row" aria-labelledby="t-h">
+    <div class="stack full">
+      <p class="label" data-t="k18">Задача</p>
+      <h2 id="t-h" data-t="k19">Превратить сайт в канал онлайн-продаж и обновить его на основе исследований</h2>
+    </div>
+    <div class="text desc">
+      <p data-t="kt1"><strong>Онлайн-продажи:</strong> дать оформить карту и другие продукты прямо на сайте, через пошаговые заявки без визита в отделение и без приложения.</p>
+      <p data-t="kt2"><strong>Редизайн</strong> на основе исследований банка и внутренней аналитики.</p>
+    </div>
+    <div class="text desc">
+      <p data-t="kt3"><strong>UI-kit:</strong> единая библиотека компонентов для сайта.</p>
+      <p data-t="kt4"><strong>Моя роль:</strong> пользовательские исследования, концепция под руководством лида, UI-kit и кликабельный прототип для desktop и mobile.</p>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="band" aria-label="Было и стало" data-ta="k-ba-sec">
+    <div class="band-in">
+      <div class="ba-wrap">
+        <figure class="ba" data-ta="k-ba" aria-label="Главная страница до и после редизайна">
+          <img src="img/ba-after-home.jpg" width="2169" height="1100" alt="После: меню по аудиториям сверху, курс доллара в шапке, баннер и карточки продуктов" data-ta="k-ba-a" loading="lazy">
+          <div class="ba-top"><img src="img/ba-before-home.jpg" width="2169" height="1100" alt="До: боковое меню слева и рекламный баннер" data-ta="k-ba-b" loading="lazy"></div>
+          <input class="ba-range" type="range" min="0" max="100" value="50" step="0.5" data-ta="k-ba-r" aria-label="Положение разделителя">
+          <span class="ba-line" aria-hidden="true"><span class="ba-knob"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M8 6 3 11l5 5M14 6l5 5-5 5" fill="none" stroke="#1D1D1F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </figure>
+        <div class="ba-tags" aria-hidden="true"><span data-t="k28">Было</span><span data-t="k29">Стало</span></div>
+        <p class="ba-cap" data-t="k30">Главная страница до и после редизайна. <b>Самые востребованные продукты видно сразу:</b> их не нужно искать по меню, любой открывается с одного клика.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="block" aria-labelledby="r-h">
+    <div class="stack">
+      <p class="label" data-t="k31">Исследования</p>
+      <h2 id="r-h" data-t="k32">Начала с данных банка и рынка, а потом пошла к людям</h2>
+    </div>
+    <div class="kv">
+      <h3 data-t="k33">Рынок</h3><p data-t="k34">Изучила предметную область и банковский рынок России, на который ориентируется банк, и провела конкурентный анализ. Результаты легли в структуру сайта.</p>
+      <h3 data-t="k35">Данные банка</h3><p data-t="k36">Разобрала исследования по кредитам и дебетовым картам: кто клиенты и как они выбирают продукт. Атрибуты выбора карт стали бенефитами на страницах, а частые вопросы ушли в FAQ, чтобы снять нагрузку с колл-центра.</p>
+      <h3 data-t="k37">4 глубинных интервью</h3><p data-t="k38">Понимания потребностей не хватало, и я провела интервью с клиентами банка о том, каким они видят Hamkorbank.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Исследования">
+    <div class="band-in hk-research">
+      <figure class="survey">
+        <p class="sv-h" data-t="k39">Что важно клиентам при выборе банка</p>
+        <ol class="sv">
+          <li class="top"><span class="sv-l" data-t="sv1">Качество обслуживания</span><span class="sv-t"><span class="sv-b" style="--v:58"></span></span><b>58%</b></li>
+          <li class="top"><span class="sv-l" data-t="sv2">Удобство мобильного приложения</span><span class="sv-t"><span class="sv-b" style="--v:36"></span></span><b>36%</b></li>
+          <li class="top"><span class="sv-l" data-t="sv3">Безопасность средств</span><span class="sv-t"><span class="sv-b" style="--v:32"></span></span><b>32%</b></li>
+          <li><span class="sv-l" data-t="sv4">Скорость переводов</span><span class="sv-t"><span class="sv-b" style="--v:29"></span></span><b>29%</b></li>
+          <li><span class="sv-l" data-t="sv5">Репутация банка</span><span class="sv-t"><span class="sv-b" style="--v:29"></span></span><b>29%</b></li>
+          <li><span class="sv-l" data-t="sv6">Комиссия за переводы и платежи</span><span class="sv-t"><span class="sv-b" style="--v:25"></span></span><b>25%</b></li>
+          <li><span class="sv-l" data-t="sv7">Доступность банкоматов</span><span class="sv-t"><span class="sv-b" style="--v:25"></span></span><b>25%</b></li>
+          <li><span class="sv-l" data-t="sv8">Доставка</span><span class="sv-t"><span class="sv-b" style="--v:18"></span></span><b>18%</b></li>
+          <li><span class="sv-l" data-t="sv9">Бонусы за выполнение заданий</span><span class="sv-t"><span class="sv-b" style="--v:10"></span></span><b>10%</b></li>
+          <li><span class="sv-l" data-t="sv10">Рекомендации знакомых</span><span class="sv-t"><span class="sv-b" style="--v:7"></span></span><b>7%</b></li>
+        </ol>
+        <figcaption data-t="sv0">Опрос 341 клиента банка, Андижан</figcaption>
+      </figure>
+      <div class="insights">
+        <p class="ins-h" data-t="k40">Инсайты интервью</p>
+        <blockquote data-t="k41">Курс доллара смотрят чаще, чем прогноз погоды: сбережения держат в долларах и меняют валюту каждый день</blockquote>
+        <blockquote data-t="k42">Людям в Узбекистане важно видеть в банке свою культуру и идентичность</blockquote>
+        <blockquote data-t="k43">О продукте хочется видеть минимум информации, только главное</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="block" aria-labelledby="d-h">
+    <div class="stack">
+      <p class="label" data-t="k44">Решения</p>
+      <h2 id="d-h" data-t="k45">Спроектировала новый сценарий и семь решений, которые выросли из исследований</h2>
+    </div>
+    <div class="kv">
+      <h3><span class="n">01</span><span data-t="k46">Навигация по трем аудиториям</span></h3><p data-t="k47">Разделила сайт на частных лиц, бизнес и финансовые организации, чтобы потоки расходились уже на входе. Боковое меню заменила выпадающим сверху, а на главную добавила карточки с переходом к продуктам по потребностям.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Навигация">
+    <div class="band-in hk-col">
+      <figure class="np-fig">
+        <div class="np" id="navProto" role="img" aria-label="Прототип: переключение между частными лицами и бизнесом и переход к курсу валют из шапки" data-ta="k-np">
+          <img class="np-shot on" data-s="private" src="img/proto-private.jpg" width="2160" height="1536" alt="">
+          <img class="np-shot" data-s="business" src="img/proto-business.jpg" width="2160" height="1536" alt="" loading="lazy">
+          <img class="np-shot" data-s="rates" src="img/proto-rates.jpg" width="2160" height="1536" alt="" loading="lazy">
+          <span class="np-tap" aria-hidden="true"></span>
+        </div>
+        <figcaption data-t="knp">Прототип: вкладки «Частным лицам» и «Для бизнеса» полностью меняют главную, а курс доллара в шапке ведет на страницу обмена</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d2-h">
+    <div class="kv">
+      <h3 id="d2-h"><span class="n">02</span><span data-t="k48">Курс доллара в шапке и онлайн-конвертер</span></h3><p data-t="k49">Из интервью: курс смотрят каждый день. Вынесла курс покупки и продажи в навигацию на всех страницах, а на странице курсов сделала конвертер. <b>Попробуйте его ниже.</b></p>
+    </div>
+  </section>
+  <section class="band" aria-label="Интерактивный конвертер валют" data-ta="k-conv-sec">
+    <div class="band-in">
+      <div class="hkui conv" id="conv">
+        <template id="flag-USD"><svg class="flag" width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" rx="3" fill="#fff"/><path d="M0 0h22v2.3H0zM0 4.6h22v2.3H0zM0 9.1h22v2.3H0zM0 13.7h22V16H0z" fill="#D8382F"/><rect width="10" height="8.6" fill="#2F4CA0"/><rect x=".5" y=".5" width="21" height="15" rx="2.5" fill="none" stroke="rgba(0,0,0,.12)"/></svg></template><template id="flag-UZS"><svg class="flag" width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" rx="3" fill="#fff"/><path d="M0 0h22v5H0z" fill="#1EB5E8"/><path d="M0 11h22v5H0z" fill="#1EB53A"/><path d="M0 5h22v.7H0zM0 10.3h22v.7H0z" fill="#CE1126"/><circle cx="4.2" cy="2.5" r="1.5" fill="#fff"/><circle cx="4.8" cy="2.3" r="1.3" fill="#1EB5E8"/><rect x=".5" y=".5" width="21" height="15" rx="2.5" fill="none" stroke="rgba(0,0,0,.12)"/></svg></template>
+        <div class="seg2" role="tablist"><button type="button" class="on" data-ch="app">В приложении</button><button type="button" data-ch="branch">В отделении</button></div>
+        <div class="conv-row">
+          <label class="f"><span class="fl">Хочу получить</span><span class="fi"><input type="text" inputmode="decimal" value="100" class="amt" aria-label="Сумма" data-ta="k-amt"><span class="ccy" data-ccy="a"></span></span></label>
+          <button type="button" class="swap" aria-label="Поменять направление" data-ta="k-swap"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 8h13l-3-3M18 14H5l3 3" fill="none" stroke="#1D1D1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="f"><span class="fl">Нужно заплатить</span><span class="fi out"><b class="res">1 202 000</b><span class="ccy" data-ccy="b"></span></span></div>
+          <span class="go go-sw"><span>Обменять в приложении</span><span>Найти отделение</span></span>
+        </div>
+        <p class="conv-note"><span data-cv="rate">1 USD = 12 020 сум</span> · <span>Курсы условные, для демонстрации</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d3-h">
+    <div class="kv">
+      <h3 id="d3-h"><span class="n">03</span><span data-t="k50">Кредитный калькулятор</span></h3><p data-t="k51">Один калькулятор для трех направлений: потребительский кредит, автокредит и ипотека. Сумма и срок меняются ползунком или вводом, платеж пересчитывается сразу. Механику расчета описала для разработки. <b>Подвигайте ползунки.</b></p>
+    </div>
+  </section>
+  <section class="band" aria-label="Интерактивный кредитный калькулятор" data-ta="k-calc-sec">
+    <div class="band-in">
+      <div class="hkui calc" id="calc">
+        <div class="calc-l">
+          <div class="seg2 kinds" role="tablist"><button type="button" class="on" data-kind="cons">Потребительский</button><button type="button" data-kind="auto">Автокредит</button><button type="button" data-kind="mort">Ипотека</button></div>
+          <div class="sl" data-sl="sum"><span class="fl">Сумма кредита</span><div class="slbox"><span class="slv"></span><input type="range" aria-label="Сумма кредита"></div><div class="slm"><span class="mn"></span><span class="mx"></span></div></div>
+          <div class="sl" data-sl="term"><span class="fl">Срок кредита</span><div class="slbox"><span class="slv"></span><input type="range" aria-label="Срок кредита"></div><div class="slm"><span class="mn"></span><span class="mx"></span></div></div>
+          <div class="rad" role="radiogroup"><span class="fl">Тип расчета</span><label><input type="radio" name="ct" value="ann" checked><i></i><span>Аннуитетный<br><small>равными частями</small></span></label><label><input type="radio" name="ct" value="diff"><i></i><span>Дифференцированный<br><small>по убыванию</small></span></label></div>
+        </div>
+        <div class="calc-r">
+          <div class="cr-grid">
+            <div><span class="fl" data-cv="pay-l">Ежемесячный платеж</span><b class="big2" data-cv="pay"></b></div>
+            <div><span class="fl">Ставка</span><b class="big2" data-cv="rate"></b></div>
+            <div><span class="fl">Документы</span><span class="chips2" data-cv="docs"><span>Паспорт</span></span></div>
+          </div>
+          <div class="cr-foot"><span class="go">Оставить заявку</span><span class="cr-link">Расчет предварительный</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d4-h">
+    <div class="kv">
+      <h3 id="d4-h"><span class="n">04</span><span data-t="k52">Пошаговые онлайн-заявки</span></h3><p data-t="k53">Оформление карт и кредитов онлайн по шагам: воронка продаж без визита в отделение. Справа от формы — главные условия продукта, чтобы не возвращаться к его странице.</p>
+      <h3><span class="n">05</span><span data-t="k54">Фильтр вкладов</span></h3><p data-t="k55">Вкладов 24, и без фильтра в них сложно разобраться. Добавила фильтр по сумме, валюте и сроку и быстрые чипсы: частичное снятие, ежемесячные выплаты, выплата в конце срока.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Фильтр вкладов">
+    <div class="band-in hk-col">
+      <figure class="shot"><img src="img/deposits-v3.jpg" width="2160" height="1866" alt="Раздел «Вклады» с фильтром по сумме, валюте и сроку и быстрыми чипсами" data-ta="k-dep" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d6-h">
+    <div class="kv">
+      <h3 id="d6-h"><span class="n">06</span><span data-t="k56">Единый стиль с приложением</span></h3><p data-t="k57">Сайт продолжает мобильное приложение банка: те же цвета, компоненты и логика, чтобы сервисы ощущались одним целым. Мобильную версию сайта собрала по тем же правилам.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Мобильное приложение и мобильная версия сайта">
+    <div class="band-in hk-col">
+      <div class="mock2">
+        <figure><img src="img/phone-app-v2.png" width="760" height="1549" alt="Мобильное приложение Hamkor: главный экран с балансом, картами, вкладами и кредитами" data-ta="k-app" loading="lazy"><figcaption data-t="kp1">Мобильное приложение</figcaption></figure>
+        <figure><img src="img/phone-site-v5.png" width="760" height="1549" alt="Мобильная версия сайта: главная с баннером карты HUMO и курсом доллара" data-ta="k-m1" loading="lazy"><figcaption data-t="kp2">Мобильная версия сайта</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="d7-h">
+    <div class="kv">
+      <h3 id="d7-h"><span class="n">07</span><span data-t="k58">Национальный паттерн</span></h3><p data-t="k59">Узбекский орнамент в баннерах выделяет банк среди конкурентов и подчеркивает культурную принадлежность, о которой говорили на интервью.</p>
+    </div>
+  </section>
+  <section class="band" aria-label="Баннеры с национальным паттерном" data-ta="k-pat-sec">
+    <div class="band-in duo2">
+      <figure class="shot"><img src="img/bn-humo-v2.jpg" width="1456" height="720" alt="Баннер карты Humo с национальным паттерном" data-ta="k-pat" loading="lazy"></figure>
+      <figure class="shot"><img src="img/bn-third.jpg" width="1456" height="720" alt="Баннер автокредита для бизнеса" data-ta="k-rate" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <!-- UI KIT -->
+  <section class="block" aria-labelledby="u-h">
+    <div class="stack">
+      <p class="label">UI-kit</p>
+      <h2 id="u-h" data-t="k78">Собрала UI-kit и описала каждый компонент</h2>
+    </div>
+    <div class="kv">
+      <h3 data-t="k79">Состав</h3><p data-t="k80">Кнопки, инпуты, выпадающие списки, слайдеры, поля валюты и телефона, карточки услуг, тарифов и банковских карт.</p>
+      <h3 data-t="k81">Описание</h3><p data-t="k82">Для каждого компонента: анатомия, состояния, размеры для desktop и mobile и пример использования в интерфейсе. Плюс кликабельный прототип сайта и мобильной версии для демонстрации и для разработчиков.</p>
+    </div>
+  </section>
+  <section class="band kit-full" aria-label="Компоненты UI-kit">
+    <img src="img/kit-block-v2.png" width="3960" height="1800" alt="Листы UI-kit: описание инпутов с вариантами, состояниями и примером использования" data-ta="k-kb" loading="lazy">
+  </section>
+
+  <!-- RESULT -->
+  <section class="block" aria-labelledby="res-h">
+    <div class="stack">
+      <p class="label" data-t="k88">Результат</p>
+      <h2 id="res-h" class="statement" data-t="k89">Карту теперь можно оформить прямо на сайте, самые востребованные продукты доступны в 1 клик, а курс доллара виден на каждой странице</h2>
+    </div>
+    <div class="results">
+      <div class="stack"><p class="big" data-to="4">4</p><p class="big-sub" data-t="k90">глубинных интервью с клиентами банка</p></div>
+      <div class="stack"><p class="big" data-to="3">3</p><p class="big-sub" data-t="k91">аудитории разделены уже на входе</p></div>
+      <div class="stack"><p class="big" data-to="7">7</p><p class="big-sub" data-t="k92">решений выросли из исследований</p></div>
+    </div>
+    <div class="hk-end">
+      <p class="lk-copy" data-t="k93">С момента проектирования прошло три года, а сайт по-прежнему работает на этом дизайне. Он легко масштабируется под новые продукты и выглядит лаконично и современно.</p>
+      <a class="hk-live inline" href="https://hamkorbank.uz/" target="_blank" rel="noopener"><span data-t="k94">Открыть сайт</span><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 13 13 5M6 5h7v7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </section>
+
+  <a class="next" href="../colsy/ru/" target="_top" data-href-ru="../colsy/ru/" data-href-en="../colsy/">
+    <div class="stack"><p class="label" data-t="k95">Следующий кейс</p><h2>ColSy</h2></div>
+    <span class="arr" aria-hidden="true">→</span>
+  </a>
+</main>
+<script>
+(function () {
+  var root = document.documentElement;
+  var EN = {"kfn": "The bank’s website is in Russian and Uzbek, so the interface is shown in Russian", "knp": "Prototype: the “Individuals” and “Business” tabs change the whole home page, and the dollar rate in the header leads to the exchange page", "k0": "← All projects", "k1": "Bank website redesign", "k2": "A retail bank website in Uzbekistan where products are a couple of clicks away, the dollar rate is always in sight, and a card or a loan can be applied for online", "k3": "Role", "k4": "User research, design, UI kit, prototype", "k5": "Results", "k6": "Pinkman studio: a lead and two designers, 2023", "k7": "The site is live and runs on this design", "k8": "The dollar rate in the header and the online converter grew out of the interviews", "k8b": "A card and other products can be applied for right on the site, not only in the mobile app", "k9": "Live site", "k10": "Situation", "k11": "The old site didn’t sell: you couldn’t apply for a card online, and people left after the first page", "ks1": "You couldn’t apply for a card on the site, only in the mobile app. The site didn’t work as a sales channel, and users didn’t go past the first page.", "ks2": "Product information was hard to find: the side menu ate up space, and the right section took searching. On top of that, the old design didn’t help the bank stand out from competitors.", "kt1": "<strong>Online sales:</strong> let people apply for a card and other products right on the site, through step-by-step applications without a branch visit or the app.", "kt2": "<strong>A redesign</strong> based on the bank’s research and internal analytics.", "kt3": "<strong>UI kit:</strong> a single component library for the site.", "kt4": "<strong>My role:</strong> user research, the concept under the lead’s guidance, the UI kit and a clickable prototype for desktop and mobile.", "k12o": "Applying", "k13o": "You couldn’t apply for a card on the site, only in the mobile app.", "k12": "Retention", "k13": "Users didn’t go past the first page.", "k14": "Finding products", "k15": "Product information was hard to find: the side menu ate up space, and the right section took searching.", "k16": "Brand", "k17": "The old design didn’t help the bank stand out from competitors.", "k18": "Task", "k19": "Turn the site into an online sales channel and update it based on research", "k20": "Redesign", "k21": "A new design based on the bank’s research and internal analytics.", "k22": "Online sales", "k23": "Let people apply for a card and other products right on the site: step-by-step applications without a branch visit or the app.", "k24": "UI kit", "k25": "A single component library for the site.", "k26": "My role", "k27": "User research, the concept under the lead’s guidance, the UI kit and a clickable prototype for desktop and mobile.", "k28": "Before", "k29": "After", "k30": "The home page before and after the redesign. <b>The most popular products are visible right away:</b> no need to dig through the menu, each one is a click away.", "k31": "Research", "k32": "I started with the bank’s data and the market, then went to people", "k33": "Market", "k34": "Studied the domain and the Russian banking market the bank looks up to, and ran a competitive analysis. The findings shaped the site structure.", "k35": "Bank data", "k36": "Went through the bank’s research on loans and debit cards: who the clients are and how they choose a product. Card selection attributes became benefits on the pages, and frequent questions went into an FAQ to take load off the call centre.", "k37": "4 in-depth interviews", "k38": "We lacked an understanding of needs, so I interviewed the bank’s clients about how they see Hamkorbank.", "k39": "What matters to clients when choosing a bank", "sv0": "Survey of 341 bank clients, Andijan", "sv1": "Service quality", "sv2": "Mobile app convenience", "sv3": "Safety of funds", "sv4": "Transfer speed", "sv5": "Bank reputation", "sv6": "Fees on transfers and payments", "sv7": "ATM availability", "sv8": "Delivery", "sv9": "Bonuses for completing tasks", "sv10": "Recommendations from friends", "k40": "Interview insights", "k41": "People check the dollar rate more often than the weather forecast: savings are kept in dollars and currency is exchanged every day", "k42": "People in Uzbekistan want to see their culture and identity in their bank", "k43": "About a product, people want the minimum of information, only what matters", "k44": "Decisions", "k45": "I designed a new scenario and seven decisions that grew out of the research", "k46": "Navigation by three audiences", "k47": "Split the site into individuals, business and financial institutions so the flows part right at the entrance. Replaced the side menu with a drop-down one at the top, and added cards on the home page that lead to products by need.", "k48": "Dollar rate in the header and an online converter", "k49": "From the interviews: people check the rate every day. I put the buy and sell rates into the navigation on every page and built a converter on the rates page. <b>Try it below.</b>", "k50": "Loan calculator", "k51": "One calculator for three products: consumer loans, car loans and mortgages. Amount and term change with a slider or by typing, and the payment updates at once. I described the calculation logic for development. <b>Move the sliders.</b>", "k52": "Step-by-step online applications", "k53": "Applying for cards and loans online, step by step: a sales funnel without a branch visit. Next to the form are the product’s key terms, so there’s no need to go back to its page.", "k54": "Deposit filter", "k55": "There are 24 deposits, and without a filter they are hard to sort out. I added a filter by amount, currency and term, plus quick chips: partial withdrawal, monthly payouts, payout at the end of the term.", "k56": "One style with the app", "k57": "The site continues the bank’s mobile app: the same colours, components and logic, so the services feel like one whole. I built the mobile version of the site by the same rules.", "k58": "National pattern", "k59": "An Uzbek ornament in the banners sets the bank apart from competitors and highlights the cultural belonging people talked about in the interviews.", "k60": "In the app", "k60a": "I want to get", "k60b": "I need to pay", "k61": "At a branch", "k62": "Exchange in the app", "kp1": "Mobile app", "kp2": "Mobile website", "k62b": "Find a branch", "k63": "Illustrative rates, for the demo", "k64": "Consumer", "k65": "Car loan", "k66": "Mortgage", "k67": "Loan amount", "k68": "Loan term", "k69": "Payment type", "k70": "Annuity<br><small>equal payments</small>", "k71": "Differentiated<br><small>decreasing</small>", "k72": "Rate", "k73": "Overpayment", "k74": "Documents", "k75": "Passport", "k76": "Apply", "k77": "Preliminary calculation", "k78": "I built a UI kit and described every component", "k79": "Contents", "k80": "Buttons, inputs, drop-down lists, sliders, currency and phone fields, service, tariff and branch cards.", "k81": "Documentation", "k82": "For each component: anatomy, states, desktop and mobile sizes and an example of use in the interface. Plus a clickable prototype of the site and its mobile version for demos and for developers.", "k83": "Button guidelines", "k84": "Slider input", "k85": "Currency input", "k86": "Tariff card", "k87": "Branch card", "k88": "Result", "k89": "You can now apply for a card right on the site, the most popular products are one click away, and the dollar rate is on every page", "k90": "in-depth interviews with the bank’s clients", "k91": "audiences split right at the entrance", "k92": "decisions grew out of the research", "k93": "Three years after the design, the site still runs on it. It scales easily to new products and looks clean and modern.", "k94": "Live site", "k95": "Next case"}, EN_ATTR = {"k-np": {"aria-label": "Prototype: switching between individuals and business and opening the exchange rates from the header"}, "k-stage": {"aria-label": "Hamkorbank website home page"}, "k-hero": {"aria-label": "Site prototype: home page, all loans, a loan page, the deposits menu and list, a deposit page, the branch map and a branch card"}, "k-ba-sec": {"aria-label": "Before and after"}, "k-ba": {"aria-label": "Home page before and after the redesign"}, "k-ba-a": {"alt": "After: audience menu at the top, the dollar rate in the header, a banner and product cards"}, "k-ba-b": {"alt": "Before: side menu on the left and an ad banner"}, "k-ba-r": {"aria-label": "Divider position"}, "k-chart": {"alt": "Client survey: top 3 factors when choosing a bank — service quality, mobile app convenience, safety of funds"}, "k-navbar": {"alt": "Site header: audiences, product menu, dollar rate and internet banking"}, "k-navprod": {"alt": "Product cards grouped by need and popular products on the home page"}, "k-conv-sec": {"aria-label": "Interactive currency converter"}, "k-amt": {"aria-label": "Amount"}, "k-swap": {"aria-label": "Swap direction"}, "k-calc-sec": {"aria-label": "Interactive loan calculator"}, "k-form": {"alt": "HUMO card application: step 1 of 3 with progress, the card’s key terms on the right"}, "k-dep": {"alt": "Deposits section with a filter by amount, currency and term and quick chips"}, "k-app": {"alt": "Hamkor mobile app: home screen with balance, cards, deposits and loans"}, "k-m1": {"alt": "Mobile website: home page with the HUMO card banner and the dollar rate"}, "k-m2": {"alt": "Mobile online microloan page"}, "k-m3": {"alt": "Mobile map of branches and ATMs"}, "k-pat-sec": {"aria-label": "Banners with the national pattern"}, "k-pat": {"alt": "Humo card banner with the national pattern"}, "k-rate": {"alt": "Business car loan banner"}, "k-fil": {"alt": "Bank offices and ATMs section with a list and a map"}, "k-kb": {"alt": "UI kit sheets: inputs with variants, states and a usage example"}, "k-ks": {"alt": "Slider input states"}, "k-kc": {"alt": "UI kit: currency field states and a drop-down list with flags"}, "k-kt": {"alt": "Tariff card"}, "k-kbc": {"alt": "Branch card"}}, DEFAULT = 'ru';
+  var RU = {}, RU_ATTR = {};
+  document.querySelectorAll('[data-t]').forEach(function (el) { RU[el.dataset.t] = el.innerHTML; });
+  document.querySelectorAll('[data-ta]').forEach(function (el) {
+    var src = EN_ATTR[el.dataset.ta]; if (!src) return;
+    var o = {}; Object.keys(src).forEach(function (k) { o[k] = el.getAttribute(k); }); RU_ATTR[el.dataset.ta] = o;
+  });
+  function lng() { return root.lang === 'en' ? 'en' : 'ru'; }
+  var listeners = [];
+  function apply(l) {
+    root.lang = l;
+    document.title = l === 'en' ? 'Hamkorbank · website redesign' : 'Hamkorbank · редизайн сайта';
+    document.querySelectorAll('[data-t]').forEach(function (el) { var v = l === 'en' ? EN[el.dataset.t] : RU[el.dataset.t]; if (v != null) el.innerHTML = v; });
+    document.querySelectorAll('[data-ta]').forEach(function (el) {
+      var src = l === 'en' ? EN_ATTR[el.dataset.ta] : RU_ATTR[el.dataset.ta]; if (!src) return;
+      Object.keys(src).forEach(function (k) { if (src[k] != null) el.setAttribute(k, src[k]); });
+    });
+    document.querySelectorAll('[data-href-' + l + ']').forEach(function (a) { a.setAttribute('href', a.getAttribute('data-href-' + l)); });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === l); });
+    listeners.forEach(function (f) { f(); });
+  }
+  var q = /[?&]lang=(ru|en)/.exec(location.search), saved = null;
+  try { saved = localStorage.getItem('hk-lang'); } catch (e) {}
+  var start = (q && q[1]) || saved || DEFAULT;
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.lang button');
+    if (!b || b.dataset.lang === lng()) return;
+    apply(b.dataset.lang);
+    try { localStorage.setItem('hk-lang', b.dataset.lang); } catch (e2) {}
+    try { var u = new URL(location.href); u.searchParams.set('lang', b.dataset.lang); history.replaceState(null, '', u); } catch (e3) {}
+  });
+  function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  var REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Before / after: the range input drives the split; on first sight the divider sweeps once
+  document.querySelectorAll('.ba').forEach(function (ba) {
+    var r = ba.querySelector('.ba-range');
+    function set(v) { ba.style.setProperty('--p', v + '%'); }
+    r.addEventListener('input', function () { set(r.value); });
+    if (REDUCE || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return;
+      io.disconnect();
+      var t0 = null, touched = false;
+      r.addEventListener('pointerdown', function () { touched = true; });
+      (function step(t) {
+        if (touched) return;
+        t0 = t0 || t; var k = Math.min(1, (t - t0) / 2400), v = 50 + 22 * Math.sin(k * Math.PI * 2) * (1 - k);
+        set(v); r.value = v;
+        if (k < 1) requestAnimationFrame(step);
+      })(performance.now());
+    }, { threshold: .6 });
+    io.observe(ba);
+  });
+
+  // Auto-playing prototypes: a cursor walks through screens on a loop while the block is on screen.
+  // Points are % of the 1440 × 1024 viewport; scroll offsets are design px of that viewport.
+  function protoKit(root) {
+    var mark = root.querySelector('.np-tap'), shots = root.querySelectorAll('[data-s]');
+    return {
+      show: function (name) {
+        shots.forEach(function (s) { s.classList.toggle('on', s.dataset.s === name); s.style.setProperty('--sy', 0); });
+      },
+      // A soft circle where the screen was "tapped", so the next screen change reads as a click.
+      tap: function (p) {
+        mark.style.left = p[0] + '%'; mark.style.top = p[1] + '%';
+        mark.classList.remove('on'); void mark.offsetWidth; mark.classList.add('on');
+      },
+      scroll: function (name, px) { root.querySelector('[data-s="' + name + '"]').style.setProperty('--sy', px / 1440); }
+    };
+  }
+  function autoplay(root, steps) {
+    var timer = null;
+    function run(i) {
+      var st = steps[i % steps.length];
+      timer = setTimeout(function () { if (st[1]) st[1](); run(i + 1); }, st[0]);
+    }
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting && !timer) run(0);
+        else if (!e.isIntersecting && timer) { clearTimeout(timer); timer = null; }
+      });
+    }, { threshold: .4 }).observe(root);
+  }
+
+  // Hero: the whole flow, from the home page to a loan, a deposit and the branch map.
+  var fp = document.getElementById('flowProto');
+  if (fp) {
+    var f = protoKit(fp);
+    var FP = { allLoans: [21.7, 52.7], loan: [16, 44.1], logo: [7.6, 7.3], deposits: [40.7, 7.3], allDeposits: [6.7, 18.8], deposit: [9.7, 78.5], branches: [74.5, 2.2], branch: [10, 52] };
+    function go(p, name) { return [[1000, function () { f.tap(p); }], [380, function () { f.show(name); }]]; }
+    autoplay(fp, [].concat(
+      [[0, function () { f.show('home'); }], [1300, null]],
+      go(FP.allLoans, 'credits'), [[1400, null]],
+      go(FP.loan, 'credit'),
+      [[1200, function () { f.scroll('credit', 772); }], [3200, function () { f.scroll('credit', 0); }], [1600, null]],
+      go(FP.logo, 'home'), [[600, null]],
+      go(FP.deposits, 'menu'), [[600, null]],
+      go(FP.allDeposits, 'deposits'),
+      [[900, function () { f.scroll('deposits', 908); }], [2400, null]],
+      go(FP.deposit, 'deposit'),
+      [[1200, function () { f.scroll('deposit', 928); }], [3200, function () { f.scroll('deposit', 0); }], [1600, null]],
+      go(FP.branches, 'branches'), [[1200, null]],
+      go(FP.branch, 'branch'), [[3200, null]]
+    ));
+  }
+
+  // Navigation: a cursor switches audiences, then opens the rates page from the header.
+  var np = document.getElementById('navProto');
+  if (np) {
+    var n = protoKit(np);
+    var NP = { biz: [13, 2.2], priv: [5.2, 2.2], rate: [82.6, 7.4] };
+    autoplay(np, [
+      [0, function () { n.show('private'); }],
+      [2200, function () { n.tap(NP.biz); }],
+      [380, function () { n.show('business'); }],
+      [3000, function () { n.tap(NP.priv); }],
+      [380, function () { n.show('private'); }],
+      [2200, function () { n.tap(NP.rate); }],
+      [380, function () { n.show('rates'); }],
+      [3400, null]
+    ]);
+  }
+
+  // Currency converter: a dollar and sum pair. The swap button flips which currency you get and which you pay with.
+  // Rates are illustrative; the app rate is better than the branch one, as on the real site.
+  var conv = document.getElementById('conv');
+  if (conv) {
+    var RATES = { app: [11990, 12020], branch: [11930, 12100] };
+    var ch = 'app', getUsd = true;
+    var amt = conv.querySelector('.amt'), res = conv.querySelector('.res'), swap = conv.querySelector('.swap');
+    var T = { ru: 'сум', en: 'sum' };
+    function ccy(el, code) { el.innerHTML = document.getElementById('flag-' + code).innerHTML + '<span>' + code + '</span>'; }
+    function fmt2(n) { var p = (Math.round(n * 100) / 100).toFixed(2).split('.'); return fmt(+p[0]) + ',' + p[1]; }
+    function num(v) { return parseFloat(String(v).replace(/[^\d.,]/g, '').replace(',', '.')) || 0; }
+    function calc() {
+      var a = num(amt.value), r = RATES[ch];
+      // Getting dollars: pay sum at the bank's sell rate. Getting sum: pay dollars at the bank's buy rate.
+      var rate = getUsd ? r[1] : r[0];
+      res.textContent = getUsd ? fmt(a * rate) : fmt2(a / rate);
+      conv.querySelector('[data-cv="rate"]').textContent = '1 USD = ' + fmt(rate) + ' ' + T.ru;
+      conv.querySelector('.go').classList.toggle('branch', ch === 'branch');
+    }
+    function sides() { ccy(conv.querySelector('[data-ccy="a"]'), getUsd ? 'USD' : 'UZS'); ccy(conv.querySelector('[data-ccy="b"]'), getUsd ? 'UZS' : 'USD'); }
+    amt.addEventListener('input', function () { amt.value = amt.value.replace(/[^\d.,\s]/g, ''); calc(); });
+    swap.addEventListener('click', function () {
+      getUsd = !getUsd; swap.classList.toggle('turn', !getUsd);
+      amt.value = getUsd ? '100' : '1 000 000';
+      sides(); calc();
+    });
+    conv.querySelectorAll('[data-ch]').forEach(function (b) {
+      b.addEventListener('click', function () { ch = b.dataset.ch; conv.querySelectorAll('[data-ch]').forEach(function (x) { x.classList.toggle('on', x === b); }); calc(); });
+    });
+    sides();
+    listeners.push(calc);
+    calc();
+  }
+
+  // Credit calculator for three products: amount and term by slider, annuity or differentiated schedule
+  var cc = document.getElementById('calc');
+  if (cc) {
+    var KINDS = {
+      cons: { rate: 23, sum: [1e6, 100e6, 1e6, 50e6], term: [12, 36, 1, 24] },
+      auto: { rate: 26, sum: [20e6, 500e6, 5e6, 180e6], term: [12, 60, 1, 36] },
+      mort: { rate: 18, sum: [100e6, 1500e6, 10e6, 600e6], term: [60, 240, 12, 180] }
+    };
+    var kind = 'cons', type = 'ann';
+    var S = { sum: cc.querySelector('[data-sl="sum"]'), term: cc.querySelector('[data-sl="term"]') };
+    var TT = { ru: { mln: 'млн сум', mo: 'мес.', pay: ['Ежемесячный платеж', 'Первый платеж'], sum: 'сум', docs: { cons: ['Паспорт'], auto: ['Паспорт', 'Водительское удостоверение'], mort: ['Паспорт', 'Договор купли-продажи'] } }, en: { mln: 'mln sum', mo: 'mo.', pay: ['Monthly payment', 'First payment'], sum: 'sum', docs: { cons: ['Passport'], auto: ['Passport', 'Driver’s licence'], mort: ['Passport', 'Sale and purchase agreement'] } } };
+    function setup(keep) {
+      var k = KINDS[kind];
+      ['sum', 'term'].forEach(function (n) {
+        var r = S[n].querySelector('input'), c = k[n];
+        r.min = c[0]; r.max = c[1]; r.step = c[2];
+        if (!keep) r.value = c[3];
+      });
+      draw();
+    }
+    function draw() {
+      var t = TT.ru, k = KINDS[kind];
+      var P = +S.sum.querySelector('input').value, n = +S.term.querySelector('input').value, i = k.rate / 100 / 12;
+      ['sum', 'term'].forEach(function (nm) {
+        var r = S[nm].querySelector('input'), v = +r.value;
+        S[nm].querySelector('.slbox').style.setProperty('--f', (v - r.min) / (r.max - r.min));
+        var lab = nm === 'sum' ? function (x) { return fmt(x / 1e6) + ' ' + t.mln; } : function (x) { return x + ' ' + t.mo; };
+        S[nm].querySelector('.slv').textContent = nm === 'sum' ? fmt(v) + ' ' + t.sum : lab(v);
+        S[nm].querySelector('.mn').textContent = lab(+r.min); S[nm].querySelector('.mx').textContent = lab(+r.max);
+      });
+      var pay, total;
+      if (type === 'ann') { pay = P * i / (1 - Math.pow(1 + i, -n)); total = pay * n; }
+      else { pay = P / n + P * i; total = P + P * i * (n + 1) / 2; }
+      cc.querySelector('[data-cv="pay-l"]').textContent = t.pay[type === 'ann' ? 0 : 1];
+      cc.querySelector('[data-cv="pay"]').textContent = fmt(pay) + ' ' + t.sum;
+      cc.querySelector('[data-cv="rate"]').textContent = k.rate + '%';
+      cc.querySelector('[data-cv="docs"]').innerHTML = t.docs[kind].map(function (d) { return '<span>' + d + '</span>'; }).join('');
+    }
+    ['sum', 'term'].forEach(function (n) { S[n].querySelector('input').addEventListener('input', draw); });
+    cc.querySelectorAll('[data-kind]').forEach(function (b) {
+      b.addEventListener('click', function () { kind = b.dataset.kind; cc.querySelectorAll('[data-kind]').forEach(function (x) { x.classList.toggle('on', x === b); }); setup(false); });
+    });
+    cc.querySelectorAll('input[name="ct"]').forEach(function (r) { r.addEventListener('change', function () { type = r.value; draw(); }); });
+    listeners.push(draw);
+    setup(false);
+  }
+
+  if (start === 'en') apply('en'); else root.lang = 'ru';
+})();
+</script>
