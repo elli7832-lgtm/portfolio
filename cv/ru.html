@@ -36,6 +36,8 @@ p, h1, h2, h3, ul { margin: 0; }
 .job { display: grid; gap: 6px; }
 .job + .job { margin-top: 10px; }
 .job-h { display: grid; gap: 1px; }
+/* a promotion inside one company: the earlier role sits right under the current one */
+.job-h + .job-h { margin-top: 6px; }
 .job-h h3 { font-weight: 400; font-size: 16px; }
 .job-h h3 b { font-weight: 600; }
 .job-h .dates { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
@@ -67,6 +69,8 @@ dl { margin: 0; }
   .sec > h2 { font-size: 8pt; padding-bottom: 4pt; }
   .job { gap: 3pt; break-inside: avoid; }
   .job + .job { margin-top: 4pt; }
+  .job-h + .job-h { margin-top: 2pt; }
+  .job-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
   .job-h h3 { font-size: 10pt; }
   .job-h .dates, .job .about { font-size: 8.6pt; }
   .grid2 { gap: 2pt 12pt; grid-template-columns: 7.2em minmax(0, 1fr); }
@@ -102,7 +106,8 @@ dl { margin: 0; }
   <section class="sec">
     <h2>Опыт</h2>
     <div class="job">
-      <div class="job-h"><h3><b>Райффайзенбанк</b> / Старший дизайнер-проектировщик</h3><span class="dates">октябрь 2024 — сейчас</span></div>
+      <div class="job-h"><h3><b>Райффайзенбанк</b> / Старший дизайнер-проектировщик</h3><span class="dates">июнь 2026 — сейчас</span></div>
+      <div class="job-h"><h3>Дизайнер-проектировщик</h3><span class="dates">октябрь 2024 — июнь 2026</span></div>
       <p class="about">ColSy — внутренняя платформа залогового обеспечения банка, заменяет легаси-систему для 12 групп пользователей</p>
       <ul>
         <li>Спроектировала 9 сквозных сценариев для 3 ролей: договоры страхования и обеспечения с учетом кросс-залогов, создание и изменение объектов через прогрузку файлов, критерии приемлемости. Договор страхования создается на 52% быстрее, платеж по страховке вносится на 21% быстрее</li>
