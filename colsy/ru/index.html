@@ -553,7 +553,10 @@ html, body { overflow-x: clip; }
 .rd { display: flex; gap: 8px; align-items: center; font-size: 12px; line-height: 18px; color: #2B2D33; }
 .rd i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #D7D2D2; background: #fff; }
 
-.ft { position: sticky; bottom: 0; margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-top: 1px solid #E8E2E2; background: #fff; font-weight: 500; }
+.ft { position: absolute; left: 251px; right: 0; bottom: 0; display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-top: 1px solid #E8E2E2; background: #fff; font-weight: 500; }
+/* The footer is pinned to the bottom of the app frame, not sticky: Safari places sticky elements wrongly inside a scaled
+   (transform) frame and showed the footer right under the header. The content keeps room for it at the end. */
+.main-in:has(> .ft:not(.ed-ft)), .ed.editing .main-in { padding-bottom: 89px; }
 .ft .ghost { padding: 11px 0; }
 .ft .pri { padding: 11px 26px; border-radius: 8px; background: #2B2D33; color: #fff; }
 /* language switch in the header; English uses curly quotes in the user quote */
@@ -1539,7 +1542,7 @@ html, body { overflow-x: clip; }
   // ---- helpers ----
   function q(sel, root) { return (root || app).querySelector(sel); }
   function sec(name) { return q('[data-sec="' + name + '"]'); }
-  function top(el) { var y = 0; while (el && el !== mainIn) { y += el.offsetTop; el = el.offsetParent; } return y; }
+  function top(el) { var y = 0; while (el && el !== mainIn && el !== app) { y += el.offsetTop; el = el.offsetParent; } return y; }
   // the limit is re-read every frame, so the view can follow a section or card that is still expanding
   function clamp(y) { return Math.max(0, Math.min(y, main.scrollHeight - 900)); }
   function scrollTo(y, dur) {
@@ -1631,7 +1634,6 @@ html, body { overflow-x: clip; }
     app = document.getElementById('app');
     main = q('[data-scroll]');
     mainIn = q('.main-in');
-    mainIn.style.position = 'relative';
     sec('objects').classList.add('empty');
     scale();
   }
