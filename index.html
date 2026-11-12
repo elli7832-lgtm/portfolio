@@ -143,6 +143,8 @@ section[id], footer[id] { scroll-margin-top: calc(var(--bar-h) + 24px); }
 .hand { font-family: var(--f-hand); color: var(--pen); line-height: 1.1; }
 .margin-notes { display: grid; gap: 10px; }
 .margin-notes .hand { font-size: 26px; }
+/* Handwritten notes live in the page margin; below 1100px there is no margin for them, so they are hidden */
+@media (max-width: 1099.98px) { .margin-notes { display: none; } }
 @media (min-width: 1100px) {
   .margin-notes { position: absolute; left: calc(100% + 36px); top: 0; width: 300px; height: 100%; display: block; }
   .margin-notes .hand { position: absolute; left: 0; width: 300px; }
@@ -334,6 +336,8 @@ section[id], footer[id] { scroll-margin-top: calc(var(--bar-h) + 24px); }
 @media (max-width: 1360px) { .visual.cover img { width: 900px; } }
 /* X5: the hero is centred, so the shot is smaller than on the other covers — the whole headline fits and the page still bleeds off the right edge */
 .visual.cover.cover-x5 img { width: 124%; }
+/* Phones: the card grows with its text instead of keeping the desktop proportion, so the screen never spills out of it */
+@media (max-width: 768px) { .half.covered { aspect-ratio: auto; } .visual.cover { height: 280px; } }
 @media (max-width: 768px) { .visual.cover { margin: 0 -31px -31px 0; clip-path: inset(0 round 0 0 30px 0); } .visual.cover img { width: 640px; border-radius: 12px 0 0 0; } }
 /* case meta on a tile */
 .tile .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
